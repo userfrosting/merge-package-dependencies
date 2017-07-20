@@ -25,3 +25,7 @@ function mergeNPM() {
     let result = mergePackages.npm(template, pkgPaths, "../app/assets/");
 }
 ```
+
+API
+---
+See [`docs/API.md`](docs/API.md).
