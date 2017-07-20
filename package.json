@@ -1,0 +1,36 @@
+{
+  "name": "merge-package-dependencies",
+  "version": "1.0.0",
+  "description": "Merge NPM or Bower package dependencies into one package, with semvar rules respected.",
+  "repository": "github:",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "version": "jsdoc2md ./lib/index.js | ntee ./docs/API.md"
+  },
+  "keywords": [
+    "package.json",
+    "bower.json",
+    "merge",
+    "npm",
+    "bower"
+  ],
+  "author": "Jordan Mele",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "exceptions": "~0.1.1",
+    "lodash": "^4.17.4",
+    "node-exceptions": "^2.0.2",
+    "package-json-validator": "~0.6.2",
+    "semver": "^5.3.0"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^3.0.0",
+    "mocha": "^3.4.2",
+    "ntee": "^1.1.5"
+  }
+}

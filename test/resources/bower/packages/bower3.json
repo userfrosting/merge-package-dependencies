@@ -1,0 +1,32 @@
+{
+    "name": "assets",
+    "version": "0.1.0",
+    "homepage": "https://github.com/userfrosting",
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "assets/vendor",
+        "examples",
+        "demo-resources",
+        "demo",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "bootstrap": "^3.3.6",
+        "clipboard": "1.5.16",
+        "font-awesome": "^4.2.0",
+        "handlebars": "^3.0.0",
+        "jquery": ">= 2.2.4",
+        "jquery-validation": "~1.14.0",
+        "fastclick": "^1.0.6",
+        "ionicons": "^2.0.1",
+        "urijs": "1.18.4"
+    },
+    "resolutions": {
+        "bootstrap": "3.x",
+        "jquery-validation": "~1.14.0"
+    }
+}
