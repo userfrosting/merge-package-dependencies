@@ -25,9 +25,6 @@
 <dt><a href="#bowerMerge">bowerMerge(template, paths, [saveTo], [log])</a> ⇒ <code>object</code></dt>
 <dd><p>Merge specified bower packages together.</p>
 </dd>
-<dt><a href="#bowerValidate">bowerValidate(pkgJson)</a></dt>
-<dd><p>Performs very basic bower.json spec validation.</p>
-</dd>
 </dl>
 
 <a name="exceptions"></a>
@@ -78,19 +75,4 @@ Merge specified bower packages together.
 | paths | <code>Array.&lt;string&gt;</code> |  | Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json". |
 | [saveTo] | <code>string</code> | <code>null</code> | If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required. |
 | [log] | <code>boolean</code> | <code>false</code> | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
-
-<a name="bowerValidate"></a>
-
-## bowerValidate(pkgJson)
-Performs very basic bower.json spec validation.
-
-**Kind**: global function  
-**Throws**:
-
-- <code>InvalidBowerPackageException</code> if provided package is invalid.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| pkgJson | <code>string</code> | JSON representation of a bower.json package. |
 

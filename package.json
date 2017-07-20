@@ -22,11 +22,12 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.0.1",
-    "exceptions": "~0.1.1",
+    "exceptions": "0.1.1",
     "lodash": "^4.17.4",
     "node-exceptions": "^2.0.2",
-    "package-json-validator": "~0.6.2",
-    "semver": "^5.3.0"
+    "package-json-validator": "0.6.2",
+    "semver": "^5.3.0",
+    "semver-intersect": "^1.1.2"
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^3.0.0",
