@@ -2,7 +2,7 @@
   "name": "merge-package-dependencies",
   "version": "1.0.0",
   "description": "Merge NPM or Bower package dependencies into one package, with semvar rules respected.",
-  "repository": "github:",
+  "repository": "github:userfrosting/merge-package-dependencies",
   "main": "lib/index.js",
   "directories": {
     "test": "test"
