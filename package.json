@@ -5,7 +5,9 @@
   "repository": "github:userfrosting/merge-package-dependencies",
   "main": "lib/index.js",
   "directories": {
-    "test": "test"
+    "test": "test",
+    "lib": "lib",
+    "doc": "docs"
   },
   "scripts": {
     "test": "mocha",
@@ -33,5 +35,8 @@
     "jsdoc-to-markdown": "^3.0.0",
     "mocha": "^3.4.2",
     "ntee": "^1.1.5"
+  },
+  "engines": {
+    "node": ">=4.0.0"
   }
 }
