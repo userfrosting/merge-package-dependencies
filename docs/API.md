@@ -25,7 +25,7 @@
 <dt><a href="#yarn">yarn(template, paths, [saveTo], [log])</a> ⇒ <code>object</code></dt>
 <dd><p>Merge specified yarn packages together.</p>
 </dd>
-<dt><a href="#bowerMerge">bowerMerge(template, paths, [saveTo], [log])</a> ⇒ <code>object</code></dt>
+<dt><a href="#bower">bower(template, paths, [saveTo], [log])</a> ⇒ <code>object</code></dt>
 <dd><p>Merge specified bower packages together.</p>
 </dd>
 </dl>
@@ -80,9 +80,9 @@ Merge specified yarn packages together.
 | [saveTo] | <code>string</code> | <code>null</code> | If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required. |
 | [log] | <code>boolean</code> | <code>false</code> | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
 
-<a name="bowerMerge"></a>
+<a name="bower"></a>
 
-## bowerMerge(template, paths, [saveTo], [log]) ⇒ <code>object</code>
+## bower(template, paths, [saveTo], [log]) ⇒ <code>object</code>
 Merge specified bower packages together.
 
 **Kind**: global function  
