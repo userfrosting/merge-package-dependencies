@@ -1,0 +1,10 @@
+{
+    "name": "pkg5",
+    "version": "1.0.0",
+    "dependencies": {
+        "bootstrap": "^3"
+    },
+    "resolutions": {
+        "bootstrap": "3.x"
+    }
+}

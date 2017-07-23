@@ -32,7 +32,7 @@ describe("#npmMerge", function() {
             './test/resources/npm/packages/package2',
             './test/resources/npm/packages/package3.json'
         ];
-        let expectedResult = require("./resources/npm/expectedResults/pkg1.json");
+        let expectedResult = JSON.parse(fs.readFileSync("./test/resources/npm/expectedResults/pkg1.json"));
         let result = packageMerge.npm(template, packagePaths);
         assert.deepEqual(result, expectedResult);
     });
@@ -63,9 +63,26 @@ describe("#npmMerge", function() {
         fs.unlinkSync("./test/working/npm/package.json");
     });
 
-    /** @todo Somehow figure out a way to test console output */
-
     /** @todo Conflict in dependencies */
+    it('should throw an exception when dependency conflicts cannot be resolved', function() {
+        let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/template.json'));
+        let packagePaths = [
+            './test/resources/npm/packages/package4.json',
+            './test/resources/npm/packages/package6.json'
+        ];
+        assert.throws(() => { packageMerge.npm(template, packagePaths) }, packageMerge.exceptions.LogicalException);
+    });
+
+    it('should throw an exception when dependency conflicts occur, even if packages provide resolutions', function() {
+        let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/template.json'));
+        let packagePaths = [
+            './test/resources/npm/packages/package4.json',
+            './test/resources/npm/packages/package5.json'
+        ];
+        assert.throws(() => { packageMerge.npm(template, packagePaths) }, packageMerge.exceptions.LogicalException);
+    });
+
+    /** @todo Somehow figure out a way to test console output */
 });
 
 describe("#yarnMerge", function() {
@@ -98,7 +115,7 @@ describe("#yarnMerge", function() {
             './test/resources/yarn/packages/package2',
             './test/resources/yarn/packages/package3.json'
         ];
-        let expectedResult = require("./resources/yarn/expectedResults/pkg1.json");
+        let expectedResult = JSON.parse(fs.readFileSync("./test/resources/yarn/expectedResults/pkg1.json"));
         let result = packageMerge.yarn(template, packagePaths);
         assert.deepEqual(result, expectedResult);
     });
@@ -129,9 +146,27 @@ describe("#yarnMerge", function() {
         fs.unlinkSync("./test/working/yarn/package.json");
     });
 
-    /** @todo Somehow figure out a way to test console output */
+    it('should throw an exception when dependency conflicts cannot be resolved', function() {
+        let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/template.json'));
+        let packagePaths = [
+            './test/resources/yarn/packages/package4.json',
+            './test/resources/yarn/packages/package6.json'
+        ];
+        assert.throws(() => { packageMerge.yarn(template, packagePaths) }, packageMerge.exceptions.LogicalException);
+    });
 
-    /** @todo Conflict in dependencies */
+    it('should return expected data when dependency conflicts can be resolved', function() {
+        let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/template.json'));
+        let packagePaths = [
+            './test/resources/yarn/packages/package4.json',
+            './test/resources/yarn/packages/package5.json'
+        ];
+        let expectedResult = JSON.parse(fs.readFileSync("./test/resources/yarn/expectedResults/pkg3.json"));
+        let result = packageMerge.yarn(template, packagePaths);
+        assert.deepEqual(result, expectedResult);
+    });
+
+    /** @todo Somehow figure out a way to test console output */
 });
 
 describe("#bowerMerge", function() {
@@ -164,7 +199,7 @@ describe("#bowerMerge", function() {
             './test/resources/bower/packages/bower2',
             './test/resources/bower/packages/bower3.json'
         ];
-        let expectedResult = require("./resources/bower/expectedResults/pkg1.json");
+        let expectedResult = JSON.parse(fs.readFileSync("./test/resources/bower/expectedResults/pkg1.json"));
         let result = packageMerge.bower(template, packagePaths);
         assert.deepEqual(result, expectedResult);
     });
@@ -195,7 +230,25 @@ describe("#bowerMerge", function() {
         fs.unlinkSync("./test/working/bower/bower.json");
     });
 
-    /** @todo Somehow figure out a way to test console output */
+    it('should throw an exception when dependency conflicts cannot be resolved', function() {
+        let template = JSON.parse(fs.readFileSync('./test/resources/bower/templates/template.json'));
+        let packagePaths = [
+            './test/resources/bower/packages/bower4.json',
+            './test/resources/bower/packages/bower6.json'
+        ];
+        assert.throws(() => { packageMerge.bower(template, packagePaths) }, packageMerge.exceptions.LogicalException);
+    });
 
-    /** @todo Conflict in dependencies */
+    it('should return expected data when dependency conflicts can be resolved', function() {
+        let template = JSON.parse(fs.readFileSync('./test/resources/bower/templates/template.json'));
+        let packagePaths = [
+            './test/resources/bower/packages/bower4.json',
+            './test/resources/bower/packages/bower5.json'
+        ];
+        let expectedResult = JSON.parse(fs.readFileSync("./test/resources/bower/expectedResults/pkg3.json"));
+        let result = packageMerge.bower(template, packagePaths);
+        assert.deepEqual(result, expectedResult);
+    });
+
+    /** @todo Somehow figure out a way to test console output */
 });

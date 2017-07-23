@@ -1,5 +1,5 @@
 {
-  "name": "merge-package-dependencies",
+  "name": "@userfrosting/merge-package-dependencies",
   "version": "1.0.0",
   "description": "Merge NPM or Bower package dependencies into one package, with semvar rules respected.",
   "repository": "github:userfrosting/merge-package-dependencies",

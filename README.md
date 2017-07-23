@@ -3,14 +3,26 @@ merge-package-dependencies
 
 A simple tool that can merge the `dependency` and `devDependency` dependency types for npm/yarn `package.json`s or bower `bower.json`s into a single `package.json` or `bower.json` object (and optionally file). To properly support frontend scenarios, this tool also merges `resolutions`.  Perfect for projects like UserFrosting were plugins (*Sprinkles*) provide virtually all functionality.
 
-> NOTE: While non-semver values are supported, they will act as an override and emit a warning. Note that this behaviour does not match npm or bower. Also note that path values will not be adjusted.
+> NOTE: While non-semver values are supported, they will act as an override and emit a warning. This behaviour does not match npm, yarn or bower.
+> NOTE: Conflict detection does not consider resolutions for listed dependencies.
+> NOTE: This is currently an offline tool, and as such conflicts further down the dependency chain are not evaluated.
+> NOTE: Path values will not be adjusted.
+
+Installation
+------------
+```bash
+npm install @userfrosting/merge-package-dependencies --save-dev
+```
+```bash
+yarn add @userfrosting/merge-pacakge-dependencies --dev
+```
 
 Example
 -------
 
 To merge multiple `package.json`'s into a single object, and save to a specified location...
 ```js
-let mergePackages = require("merge-package-dependencies");
+let mergePackages = require("@userfrosting/merge-package-dependencies");
 
 function mergeYarn() {
     let template = {

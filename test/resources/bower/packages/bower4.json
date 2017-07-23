@@ -1,0 +1,6 @@
+{
+    "name": "pkg4",
+    "dependencies": {
+        "bootstrap": "2.0.0"
+    }
+}

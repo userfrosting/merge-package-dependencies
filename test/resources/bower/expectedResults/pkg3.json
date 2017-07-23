@@ -1,0 +1,10 @@
+{
+    "name": "template",
+    "dependencies": {
+        "bootstrap": "3.x"
+    },
+    "devDependencies": {},
+    "resolutions": {
+        "bootstrap": "3.x"
+    }
+}
