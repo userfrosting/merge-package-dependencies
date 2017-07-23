@@ -82,6 +82,18 @@ describe("#npmMerge", function() {
         assert.throws(() => { packageMerge.npm(template, packagePaths) }, packageMerge.exceptions.LogicalException);
     });
 
+    it('should override when non-semver value is detected for an incoming dependency', function() {
+        let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/template.json'));
+        let packagePaths = [
+            './test/resources/npm/packages/package6.json',
+            './test/resources/npm/packages/package7.json'
+        ];
+        let expectedResult = JSON.parse(fs.readFileSync("./test/resources/npm/expectedResults/pkg3.json"));
+        let result = packageMerge.npm(template, packagePaths);
+
+        assert.deepEqual(result, expectedResult);
+    });
+
     /** @todo Somehow figure out a way to test console output */
 });
 
@@ -166,6 +178,18 @@ describe("#yarnMerge", function() {
         assert.deepEqual(result, expectedResult);
     });
 
+    it('should override when non-semver value is detected for an incoming dependency', function() {
+        let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/template.json'));
+        let packagePaths = [
+            './test/resources/yarn/packages/package6.json',
+            './test/resources/yarn/packages/package7.json'
+        ];
+        let expectedResult = JSON.parse(fs.readFileSync("./test/resources/yarn/expectedResults/pkg4.json"));
+        let result = packageMerge.yarn(template, packagePaths);
+
+        assert.deepEqual(result, expectedResult);
+    });
+
     /** @todo Somehow figure out a way to test console output */
 });
 
@@ -247,6 +271,18 @@ describe("#bowerMerge", function() {
         ];
         let expectedResult = JSON.parse(fs.readFileSync("./test/resources/bower/expectedResults/pkg3.json"));
         let result = packageMerge.bower(template, packagePaths);
+        assert.deepEqual(result, expectedResult);
+    });
+
+    it('should override when non-semver value is detected for an incoming dependency', function() {
+        let template = JSON.parse(fs.readFileSync('./test/resources/bower/templates/template.json'));
+        let packagePaths = [
+            './test/resources/bower/packages/bower6.json',
+            './test/resources/bower/packages/bower7.json'
+        ];
+        let expectedResult = JSON.parse(fs.readFileSync("./test/resources/bower/expectedResults/pkg4.json"));
+        let result = packageMerge.bower(template, packagePaths);
+
         assert.deepEqual(result, expectedResult);
     });
 
