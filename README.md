@@ -1,7 +1,7 @@
 merge-package-dependencies
 =================
 
-A simple tool that can merge the `dependency` and `devDependency` dependency types for npm/yarn `package.json`s or bower `bower.json`s into a single `package.json` or `bower.json` object (and optionally file). To properly support frontend scenarios, this tool also merges `resolutions`.  Perfect for projects like UserFrosting were plugins (*Sprinkles*) provide virtually all functionality.
+A simple tool that can merge the `dependency` and `devDependency` dependency types for npm/yarn `package.json`s or bower `bower.json`s into a single `package.json` or `bower.json` object (and optionally file). To properly support frontend scenarios, this tool also merges `resolutions`.  Perfect for projects like UserFrosting where plugins (*Sprinkles*) provide virtually all functionality.
 
 > NOTE: While non-semver values are supported, they will act as an override and emit a warning (even if logging is disabled). This override behaviour only applies to 'incoming' values. This behaviour does not match npm, yarn or bower.
 
