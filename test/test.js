@@ -1,4 +1,3 @@
-"use strict";
 let packageMerge = require('../');
 let assert = require("assert");
 let fs = require("fs");
@@ -6,7 +5,6 @@ let fs = require("fs");
 describe("#npmMerge", function() {
 
     it('should throw exception when provided with an invalid package template.', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/templateInvalid.json'));
         let packagePaths = [
             './test/resources/npm/packages/',
@@ -17,7 +15,6 @@ describe("#npmMerge", function() {
     });
 
     it('should throw exception when provided with a path to an invalid package', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/template.json'));
         let packagePaths = [
             './test/resources/npm/packages/',
@@ -29,7 +26,6 @@ describe("#npmMerge", function() {
     });
 
     it('should return expected data when merging 3 packages', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/template.json'));
         let packagePaths = [
             './test/resources/npm/packages/',
@@ -42,7 +38,6 @@ describe("#npmMerge", function() {
     });
 
     it('should return expected data when merging 1 package', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/template.json'));
         let packagePaths = [
             './test/resources/npm/packages/'
@@ -53,7 +48,6 @@ describe("#npmMerge", function() {
     });
 
     it('should save generated package to specified destination', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/template.json'));
         let packagePaths = [
             './test/resources/npm/packages/',
@@ -71,7 +65,6 @@ describe("#npmMerge", function() {
 
     /** @todo Conflict in dependencies */
     it('should throw an exception when dependency conflicts cannot be resolved', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/template.json'));
         let packagePaths = [
             './test/resources/npm/packages/package4.json',
@@ -81,7 +74,6 @@ describe("#npmMerge", function() {
     });
 
     it('should throw an exception when dependency conflicts occur, even if packages provide resolutions', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/template.json'));
         let packagePaths = [
             './test/resources/npm/packages/package4.json',
@@ -91,7 +83,6 @@ describe("#npmMerge", function() {
     });
 
     it('should override when non-semver value is detected for an incoming dependency', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/template.json'));
         let packagePaths = [
             './test/resources/npm/packages/package6.json',
@@ -109,7 +100,6 @@ describe("#npmMerge", function() {
 describe("#yarnMerge", function() {
 
     it('should throw exception when provided with an invalid package template.', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/templateInvalid.json'));
         let packagePaths = [
             './test/resources/yarn/packages/',
@@ -120,7 +110,6 @@ describe("#yarnMerge", function() {
     });
 
     it('should throw exception when provided with a path to an invalid package', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/template.json'));
         let packagePaths = [
             './test/resources/yarn/packages/',
@@ -132,7 +121,6 @@ describe("#yarnMerge", function() {
     });
 
     it('should return expected data when merging 3 packages', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/template.json'));
         let packagePaths = [
             './test/resources/yarn/packages/',
@@ -145,7 +133,6 @@ describe("#yarnMerge", function() {
     });
 
     it('should return expected data when merging 1 package', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/template.json'));
         let packagePaths = [
             './test/resources/yarn/packages/'
@@ -156,7 +143,6 @@ describe("#yarnMerge", function() {
     });
 
     it('should save generated package to specified destination', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/template.json'));
         let packagePaths = [
             './test/resources/yarn/packages/',
@@ -173,7 +159,6 @@ describe("#yarnMerge", function() {
     });
 
     it('should throw an exception when dependency conflicts cannot be resolved', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/template.json'));
         let packagePaths = [
             './test/resources/yarn/packages/package4.json',
@@ -183,7 +168,6 @@ describe("#yarnMerge", function() {
     });
 
     it('should return expected data when dependency conflicts can be resolved', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/template.json'));
         let packagePaths = [
             './test/resources/yarn/packages/package4.json',
@@ -195,7 +179,6 @@ describe("#yarnMerge", function() {
     });
 
     it('should override when non-semver value is detected for an incoming dependency', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/template.json'));
         let packagePaths = [
             './test/resources/yarn/packages/package6.json',
@@ -213,7 +196,6 @@ describe("#yarnMerge", function() {
 describe("#bowerMerge", function() {
 
     it('should throw exception when provided with an invalid package template.', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/bower/templates/templateInvalid.json'));
         let packagePaths = [
             './test/resources/bower/packages/',
@@ -224,7 +206,6 @@ describe("#bowerMerge", function() {
     });
 
     it('should throw exception when provided with a path to an invalid package', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/bower/templates/template.json'));
         let packagePaths = [
             './test/resources/bower/packages/',
@@ -236,7 +217,6 @@ describe("#bowerMerge", function() {
     });
 
     it('should return expected data when merging 3 packages', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/bower/templates/template.json'));
         let packagePaths = [
             './test/resources/bower/packages/',
@@ -249,7 +229,6 @@ describe("#bowerMerge", function() {
     });
 
     it('should return expected data when merging 1 package', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/bower/templates/template.json'));
         let packagePaths = [
             './test/resources/bower/packages/'
@@ -260,7 +239,6 @@ describe("#bowerMerge", function() {
     });
 
     it('should save generated package to specified destination', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/bower/templates/template.json'));
         let packagePaths = [
             './test/resources/bower/packages/',
@@ -277,7 +255,6 @@ describe("#bowerMerge", function() {
     });
 
     it('should throw an exception when dependency conflicts cannot be resolved', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/bower/templates/template.json'));
         let packagePaths = [
             './test/resources/bower/packages/bower4.json',
@@ -287,7 +264,6 @@ describe("#bowerMerge", function() {
     });
 
     it('should return expected data when dependency conflicts can be resolved', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/bower/templates/template.json'));
         let packagePaths = [
             './test/resources/bower/packages/bower4.json',
@@ -299,7 +275,6 @@ describe("#bowerMerge", function() {
     });
 
     it('should override when non-semver value is detected for an incoming dependency', function() {
-        "use strict";
         let template = JSON.parse(fs.readFileSync('./test/resources/bower/templates/template.json'));
         let packagePaths = [
             './test/resources/bower/packages/bower6.json',
