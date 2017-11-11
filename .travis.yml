@@ -1,0 +1,12 @@
+sudo: false
+language: node_js
+# Test against verious Node.js versions
+node_js:
+  - "6"
+  - "7"
+  - "stable"
+
+before_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
