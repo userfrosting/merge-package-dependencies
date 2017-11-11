@@ -94,6 +94,17 @@ describe("#npmMerge", function() {
         assert.deepEqual(result, expectedResult);
     });
 
+    it('should accept missing recommended fields when package is private', function() {
+        let template = JSON.parse(fs.readFileSync('./test/resources/npm/templates/templatePrivate.json'));
+        let packagePaths = [
+            './test/resources/npm/packages/package7.json'
+        ];
+        let expectedResult = JSON.parse(fs.readFileSync("./test/resources/npm/expectedResults/pkg4.json"));
+        let result = packageMerge.npm(template, packagePaths);
+
+        assert.deepEqual(result, expectedResult);
+    });
+
     /** @todo Somehow figure out a way to test console output */
 });
 
@@ -185,6 +196,17 @@ describe("#yarnMerge", function() {
             './test/resources/yarn/packages/package7.json'
         ];
         let expectedResult = JSON.parse(fs.readFileSync("./test/resources/yarn/expectedResults/pkg4.json"));
+        let result = packageMerge.yarn(template, packagePaths);
+
+        assert.deepEqual(result, expectedResult);
+    });
+
+    it('should accept missing recommended fields when package is private', function() {
+        let template = JSON.parse(fs.readFileSync('./test/resources/yarn/templates/templatePrivate.json'));
+        let packagePaths = [
+            './test/resources/yarn/packages/package7.json'
+        ];
+        let expectedResult = JSON.parse(fs.readFileSync("./test/resources/yarn/expectedResults/pkg5.json"));
         let result = packageMerge.yarn(template, packagePaths);
 
         assert.deepEqual(result, expectedResult);
