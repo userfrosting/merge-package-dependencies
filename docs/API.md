@@ -51,9 +51,7 @@ Merge specified npm packages together.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| template | <code>object</code> |  | Template that packages will be merged into. Is validated with [package-json-validator](https://www.npmjs.com/package/package-json-validator). |
-| template.name | <code>string</code> |  | Template MUST have a name. |
-| template.version | <code>string</code> |  | Template MUST have a version. |
+| template | <code>object</code> |  | Template that packages will be merged into. Is validated with [package-json-validator](https://www.npmjs.com/package/package-json-validator) with template.private == true overriding this. |
 | paths | <code>Array.&lt;string&gt;</code> |  | Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json". |
 | [saveTo] | <code>string</code> | <code>null</code> | If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required. |
 | [log] | <code>boolean</code> | <code>false</code> | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
@@ -73,9 +71,7 @@ Merge specified yarn packages together.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| template | <code>object</code> |  | Template that packages will be merged into. Is validated with [package-json-validator](https://www.npmjs.com/package/package-json-validator). |
-| template.name | <code>string</code> |  | Template MUST have a name. |
-| template.version | <code>string</code> |  | Template MUST have a version. |
+| template | <code>object</code> |  | Template that packages will be merged into. Is validated with [package-json-validator](https://www.npmjs.com/package/package-json-validator) with template.private == true overriding this. |
 | paths | <code>Array.&lt;string&gt;</code> |  | Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json". |
 | [saveTo] | <code>string</code> | <code>null</code> | If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required. |
 | [log] | <code>boolean</code> | <code>false</code> | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
