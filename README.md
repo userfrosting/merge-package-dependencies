@@ -1,7 +1,10 @@
 merge-package-dependencies
 =================
 
-[![Build status](https://ci.appveyor.com/api/projects/status/26pdbjy6go569f21/branch/master?svg=true)](https://ci.appveyor.com/project/Silic0nS0ldier/merge-package-dependencies/branch/master)
+| Branch | Builds |
+| ------ | ------ |
+| master | [![AppVeyor Build Status](https://img.shields.io/appveyor/ci/Silic0nS0ldier/merge-package-dependencies/master.svg?label=AppVeyor&style=flat-square)](https://ci.appveyor.com/project/Silic0nS0ldier/merge-package-dependencies) [![Travis Build Status](https://img.shields.io/travis/UserFrosting/merge-package-dependencies/master.svg?label=Travis&style=flat-square)](https://travis-ci.org/UserFrosting/merge-package-dependencies) |
+| develop    | [![AppVeyor Build Status](https://img.shields.io/appveyor/ci/Silic0nS0ldier/merge-package-dependencies/dev.svg?label=AppVeyor&style=flat-square)](https://ci.appveyor.com/project/Silic0nS0ldier/merge-package-dependencies) [![Travis Build Status](https://img.shields.io/travis/UserFrosting/merge-package-dependencies/dev.svg?label=Travis&style=flat-square)](https://travis-ci.org/UserFrosting/merge-package-dependencies) |
 
 A simple tool that can merge the `dependency` and `devDependency` dependency types for npm/yarn `package.json`s or bower `bower.json`s into a single `package.json` or `bower.json` object (and optionally file). To properly support frontend scenarios, this tool also merges `resolutions`, and ignores unnecessary field recommendations for private npm/yarn packages. Perfect for projects like UserFrosting where plugins (*Sprinkles*) provide virtually all functionality.
 
