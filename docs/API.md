@@ -28,12 +28,23 @@
 <dt><a href="#bower">bower(template, paths, [saveTo], [log])</a> ⇒ <code>object</code></dt>
 <dd><p>Merge specified bower packages together.</p>
 </dd>
+<dt><a href="#yarnIsFlat">yarnIsFlat([p], [log])</a> ⇒ <code>boolean</code></dt>
+<dd><p>Uses <code>yarn.lock</code> to detect if multiple versions of a dependency have been installed.</p>
+</dd>
 </dl>
 
 <a name="exceptions"></a>
 
 ## exceptions : <code>object</code>
-Exceptions usable within package, exposed for convience during error handling.- LogicalException- DomainException- InvalidArgumentExcepetion- RangeException- RuntimeException- HttpException- InvalidNpmPackageException- InvalidBowerPackageException
+Exceptions usable within package, exposed for convience during error handling.
+- LogicalException
+- DomainException
+- InvalidArgumentExcepetion
+- RangeException
+- RuntimeException
+- HttpException
+- InvalidNpmPackageException
+- InvalidBowerPackageException
 
 **Kind**: global namespace  
 <a name="npm"></a>
@@ -95,5 +106,17 @@ Merge specified bower packages together.
 | template.name | <code>string</code> |  | Template MUST have a name. |
 | paths | <code>Array.&lt;string&gt;</code> |  | Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json". |
 | [saveTo] | <code>string</code> | <code>null</code> | If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required. |
+| [log] | <code>boolean</code> | <code>false</code> | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
+
+<a name="yarnIsFlat"></a>
+
+## yarnIsFlat([p], [log]) ⇒ <code>boolean</code>
+Uses `yarn.lock` to detect if multiple versions of a dependency have been installed.
+
+**Kind**: global function  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [p] | <code>string</code> | <code>&quot;process.cwd()&quot;</code> | Directory of `yarn.lock`. |
 | [log] | <code>boolean</code> | <code>false</code> | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
 

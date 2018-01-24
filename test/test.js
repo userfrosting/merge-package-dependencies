@@ -1,6 +1,6 @@
 let packageMerge = require('../');
-let assert = require("assert");
-let fs = require("fs");
+let assert = require('assert');
+let fs = require('fs');
 
 describe("#npmMerge", function() {
 
@@ -309,4 +309,16 @@ describe("#bowerMerge", function() {
     });
 
     /** @todo Somehow figure out a way to test console output */
+});
+
+describe("#yarnIsFlat", function() {
+
+    it('should return true when dependency tree is flat', function() {
+        assert.strictEqual(packageMerge.yarnIsFlat('./test/resources/yarn/lockfiles/flat/'), true);
+    });
+
+    it('should return false when dependency tree is not flat', function() {
+        assert.strictEqual(packageMerge.yarnIsFlat('./test/resources/yarn/lockfiles/dups/'), false);
+    });
+
 });
