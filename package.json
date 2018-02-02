@@ -1,6 +1,6 @@
 {
   "name": "@userfrosting/merge-package-dependencies",
-  "version": "1.1.0",
+  "version": "1.2.0-rc.1",
   "description": "Merge NPM, Yarn or Bower package dependencies into one package, with semvar rules respected.",
   "repository": "github:userfrosting/merge-package-dependencies",
   "main": "lib/index.js",
