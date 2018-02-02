@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "version": "jsdoc2md ./lib/index.js | ntee ./docs/API.md"
+    "version": "jsdoc2md ./lib/index.js > ./docs/API.md && changelog-updater"
   },
   "keywords": [
     "package.json",
@@ -31,12 +31,12 @@
     "node-exceptions": "^3.0.0",
     "package-json-validator": "0.6.3",
     "semver": "^5.5.0",
-    "semver-intersect": "^1.2.0"
+    "semver-intersect": "^1.3.0"
   },
   "devDependencies": {
+    "changelog-updater": "^1.1.0",
     "jsdoc-to-markdown": "^4.0.1",
-    "mocha": "^5.0.0",
-    "ntee": "^1.1.5"
+    "mocha": "^5.0.0"
   },
   "engines": {
     "node": ">=6.0.0"
