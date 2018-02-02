@@ -24,6 +24,7 @@
   "author": "Jordan Mele <SiliconSoldier@outlook.com.au>",
   "license": "MIT",
   "dependencies": {
+    "@yarnpkg/lockfile": "./node_modules_bundled/@yarnpkg/lockfile",
     "chalk": "^2.3.0",
     "fs-extra": "^5.0.0",
     "lodash": "^4.17.4",
