@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.2.0-rc.2] - 2018-02-03
+### Fixed
+- Issue with internal yarnpkg/lockfile dependency that slipped testing.
+
 ## [1.2.0-rc.1] - 2018-02-02
 ### Added
 - Duplicate dependency checker that uses `yarn.lock`. This is a stop-gap solution for Yarn's inability to report flat mode dependency conflicts when running in a non-interactive context.
