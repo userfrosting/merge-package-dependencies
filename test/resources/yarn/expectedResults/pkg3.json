@@ -5,6 +5,7 @@
         "bootstrap": "3.x"
     },
     "devDependencies": {},
+    "peerDependencies": {},
     "resolutions": {
         "bootstrap": "3.x"
     }

@@ -4,5 +4,6 @@
     "dependencies": {
         "bootstrap": "https://github.com/twbs/bootstrap/archive/v4-dev.zip"
     },
-    "devDependencies": {}
+    "devDependencies": {},
+    "peerDependencies": {}
 }
