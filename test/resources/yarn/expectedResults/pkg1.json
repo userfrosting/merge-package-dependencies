@@ -8,5 +8,6 @@
         "semver": "^5.3.0"
     },
     "devDependencies": {},
+    "peerDependencies": {},
     "resolutions": {}
 }

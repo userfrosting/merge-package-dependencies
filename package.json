@@ -1,6 +1,6 @@
 {
   "name": "@userfrosting/merge-package-dependencies",
-  "version": "1.2.0-rc.2",
+  "version": "1.2.0",
   "description": "Merge NPM, Yarn or Bower package dependencies into one package, with semvar rules respected.",
   "repository": "github:userfrosting/merge-package-dependencies",
   "main": "lib/index.js",
@@ -24,6 +24,7 @@
   "author": "Jordan Mele <SiliconSoldier@outlook.com.au>",
   "license": "MIT",
   "dependencies": {
+    "@yarnpkg/lockfile": "^1.0.2",
     "chalk": "^2.3.0",
     "fs-extra": "^5.0.0",
     "lodash": "^4.17.4",

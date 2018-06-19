@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.2.0] - 2018-06-19
+### Added
+- Merge `peerDependencies` in Yarn and NPM packages. (thanks @FabianMeul)
+
 ## [1.2.0-rc.2] - 2018-02-03
 ### Fixed
 - Issue with internal yarnpkg/lockfile dependency that slipped testing.
