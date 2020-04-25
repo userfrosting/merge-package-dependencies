@@ -35,6 +35,9 @@ const bowerDependencyTypes = [
     "resolutions"
 ];
 
+/**
+ * @public
+ */
 export interface INodeTemplate {
     name: string;
     private?: boolean;
@@ -45,6 +48,9 @@ export interface INodeTemplate {
     resolutions?: { [x: string]: string };
 }
 
+/**
+ * @public
+ */
 export interface IBowerTemplate {
     name: string;
     dependencies?: { [x: string]: string };
@@ -52,6 +58,9 @@ export interface IBowerTemplate {
     resolutions?: { [x: string]: string };
 }
 
+/**
+ * @public
+ */
 export type LogOption = boolean | ((message?: any, ...optionalParams: any[]) => void);
 
 
