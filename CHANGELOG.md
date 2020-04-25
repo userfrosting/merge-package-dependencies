@@ -14,7 +14,7 @@ This release is mainly focused on bringing project tooling up to date.
 
 ### Changed
 - Major tooling refactor, API remains unchanged however exports may behave differently.
-- Major version updates for dependencies (`chalk` from 2.4.1 to 4).
+- Major version updates for dependencies (`chalk` from 2.4.1 to 4, `fs-extra` from 7.0.1 to 9, `semver` from 5.6 to 7).
 
 ## [1.2.1]
 ### Changed
