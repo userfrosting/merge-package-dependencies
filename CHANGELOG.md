@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unknown]
 
+## [2.0.0]
+
 This release is mainly focused on bringing project tooling up to date.
 
 ### Added
