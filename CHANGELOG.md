@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unknown]
 
+This release is mainly focused on bringing project tooling up to date.
+
+### Added
+- Used exception types are now exported.
+- TypeScript types.
+
+### Changed
+- Major tooling refactor, API remains unchanged however exports may behave differently.
+- Major version updates for dependencies (`chalk` from 2.4.1 to 4, `fs-extra` from 7.0.1 to 9, `semver` from 5.6 to 7).
+
 ## [1.2.1]
 ### Changed
 - Updated dependencies.
@@ -13,6 +23,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.2.0] - 2018-06-19
 ### Added
 - Merge `peerDependencies` in Yarn and NPM packages. (thanks @FabianMeul)
+
+## [1.2.0-rc.2] - 2018-02-03
+### Fixed
+- Issue with internal yarnpkg/lockfile dependency that slipped testing.
 
 ## [1.2.0-rc.1] - 2018-02-02
 ### Added
