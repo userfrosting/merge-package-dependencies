@@ -35,7 +35,7 @@ const bowerDependencyTypes = [
     "resolutions"
 ];
 
-interface INodeTemplate {
+export interface INodeTemplate {
     name: string;
     private?: boolean;
     version: string;
@@ -45,27 +45,25 @@ interface INodeTemplate {
     resolutions?: { [x: string]: string };
 }
 
-interface IBowerTemplate {
+export interface IBowerTemplate {
     name: string;
     dependencies?: { [x: string]: string };
     devDependencies?: { [x: string]: string };
     resolutions?: { [x: string]: string };
 }
 
-type LogOption = false | ((message?: any, ...optionalParams: any[]) => void);
+export type LogOption = boolean | ((message?: any, ...optionalParams: any[]) => void);
 
 
 /**
  * Merge specified npm packages together.
  *
- * @param template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/package-json-validator package-json-validator} with template.private == true overriding this.
- * @param paths Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
- * @param saveTo If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
- * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
+ * @param template - Template that packages will be merged into. Is validated with [package-json-validator](https://www.npmjs.com/package/package-json-validator) with template.private == true overriding this.
+ * @param paths - Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
+ * @param saveTo - If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
+ * @param log - If true, progress and errors will be logged. Has no affect on exceptions thrown.
  *
- * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
- * @throws {Exceptions.InvalidNpmPackageException} if any package is invalid.
- * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
+ * @public
  */
 export function npm(template: INodeTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
     return packageJsonMerge(template, paths, saveTo, log, "npm");
@@ -74,14 +72,12 @@ export function npm(template: INodeTemplate, paths: string[], saveTo: string|nul
 /**
  * Merge specified yarn packages together.
  *
- * @param template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/package-json-validator package-json-validator} with template.private == true overriding this.
- * @param paths Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
- * @param saveTo If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
- * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
+ * @param template - Template that packages will be merged into. Is validated with [package-json-validator](https://www.npmjs.com/package/package-json-validator) with template.private == true overriding this.
+ * @param paths - Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
+ * @param saveTo - If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
+ * @param log - If true, progress and errors will be logged. Has no affect on exceptions thrown.
  *
- * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
- * @throws {Exceptions.InvalidNpmPackageException} if any package is invalid.
- * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
+ * @public
  */
 export function yarn(template: INodeTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
     return packageJsonMerge(template, paths, saveTo, log, "yarn");
@@ -90,15 +86,12 @@ export function yarn(template: INodeTemplate, paths: string[], saveTo: string|nu
 /**
  * Merge specified bower packages together.
  *
- * @param template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/bower-json bower-json}.
- * @param template.name Template MUST have a name.
- * @param paths Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json".
- * @param saveTo If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required.
- * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
+ * @param template - Template that packages will be merged into. Is validated with [bower-json](https://www.npmjs.com/package/bower-json).
+ * @param paths - Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json".
+ * @param saveTo - If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required.
+ * @param log - If true, progress and errors will be logged. Has no affect on exceptions thrown.
  *
- * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
- * @throws {Exceptions.InvalidBowerPackageException} if any package is invalid.
- * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
+ * @public
  */
 export function bower(template: IBowerTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
     return bowerMerge(template, paths, saveTo, log);
@@ -107,14 +100,22 @@ export function bower(template: IBowerTemplate, paths: string[], saveTo: string|
 /**
  * Uses `yarn.lock` to detect if multiple versions of a dependency have been installed.
  *
- * @param p Directory of `yarn.lock`.
- * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
+ * @param p - Directory of `yarn.lock`.
+ * @param log - If true, progress and errors will be logged. Has no affect on exceptions thrown.
+ *
+ * @public
  */
 export function yarnIsFlat(p: string = process.cwd(), log: LogOption = false): boolean {
+    if (log === true) {
+        log = console.log;
+    } else if (!log) {
+        log = () => {};
+    }
+
     // Normalize provided directory
     p = path.normalize(p + '/');
 
-    if (log) console.log(`Checking for duplicate dependencies with '${p + 'yarn.lock'}'`);
+    log(`Checking for duplicate dependencies with '${p + 'yarn.lock'}'`);
 
     // Parse lockfile
     let yarnLock = yarnLockParser.parse(fs.readFileSync(p + 'yarn.lock', 'utf8')).object;
@@ -150,7 +151,7 @@ export function yarnIsFlat(p: string = process.cwd(), log: LogOption = false): b
 
     // Quit now if there aren't duplicates
     if (!dups) {
-        if (log) console.log(chalk.green('No duplicates found.'));
+        log(chalk.green('No duplicates found.'));
         return true;
     }
 
@@ -162,12 +163,12 @@ export function yarnIsFlat(p: string = process.cwd(), log: LogOption = false): b
      *     Resolvers: ...
      */
     if (log) {
-        console.log(chalk.red('Duplicate dependencies detected!'))
+        log(chalk.red('Duplicate dependencies detected!'))
         for (let name in deps) {
             if (deps[name].versions.length > 1) {
-                console.log(`${chalk.bold(deps[name].versions.length)} versions of ${chalk.cyan(name)} installed.`);
-                console.log(`    Versions: ${deps[name].versions.join(', ')}`);
-                console.log(`    Resolvers: ${deps[name].resolvers.join(', ')}`);
+                log(`${chalk.bold(deps[name].versions.length)} versions of ${chalk.cyan(name)} installed.`);
+                log(`    Versions: ${deps[name].versions.join(', ')}`);
+                log(`    Resolvers: ${deps[name].resolvers.join(', ')}`);
             }
         }
     }
@@ -178,27 +179,22 @@ export function yarnIsFlat(p: string = process.cwd(), log: LogOption = false): b
 /**
  * Merge specified packages together. (supports npm and yarn)
  *
- * @param template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/package-json-validator package-json-validator}.
- * @param template.name Template MUST have a name.
- * @param template.version Template MUST have a version.
- * @param paths Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
- * @param saveTo If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
- * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
- * @param packageSpec Used to determine what dependency keys should be merged.
- *
- * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
- * @throws {Exceptions.InvalidNpmPackageException} if any package is invalid.
- * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
- *
- * @private
+ * @param template - Template that packages will be merged into. Is validated with [package-json-validator](https://www.npmjs.com/package/package-json-validator).
+ * @param paths - Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
+ * @param saveTo - If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
+ * @param log - If true, progress and errors will be logged. Has no affect on exceptions thrown.
+ * @param packageSpec - Used to determine what dependency keys should be merged.
  */
 function packageJsonMerge(template: INodeTemplate, paths: string[], saveTo: string|null, log: LogOption, packageSpec: string): {} {
-    // Inspect input.
-    // template (and log)
-    if (log) {
+    if (log === true) {
         log = console.log;
-        log("Inspecting template package...")
+    } else if (!log) {
+        log = () => {};
     }
+
+    // Inspect input template
+    log("Inspecting template package...")
+
     // If template.private == true, we only inspect touched fields.
     npmValidate(template, packageSpec, log);
     // paths
@@ -222,9 +218,7 @@ function packageJsonMerge(template: INodeTemplate, paths: string[], saveTo: stri
     // Load and validate packages.
     let packages = [];
     for (let filePath of paths) {
-        if (log) {
-            log("Inspecting package at " + filePath);
-        }
+        log("Inspecting package at " + filePath);
         let pkg = JSON.parse(fs.readFileSync(filePath).toString());// We don't use require, as the extension could be different. Plus require aggressively caches.
         npmValidate(pkg, packageSpec, log);
         packages.push(pkg);
@@ -249,9 +243,8 @@ function packageJsonMerge(template: INodeTemplate, paths: string[], saveTo: stri
 
     // Save if requested.
     if (saveTo) {
-        if (log) {
-            log(`Saving generated package to '${saveTo}'`);
-        }
+        log(`Saving generated package to '${saveTo}'`);
+
         // Make directories if needed.
         if (!fs.existsSync(path.dirname(saveTo))) {
             fs.mkdirSync(path.dirname(saveTo));
@@ -259,9 +252,7 @@ function packageJsonMerge(template: INodeTemplate, paths: string[], saveTo: stri
         fs.writeFileSync(saveTo, JSON.stringify(template, null, '    '));
     }
 
-    if (log) {
-        log("All done!");
-    }
+    log("All done!");
 
     // Return package.
     return template;
@@ -270,14 +261,9 @@ function packageJsonMerge(template: INodeTemplate, paths: string[], saveTo: stri
 /**
  * Validates npm package. When private == true, validation goes into minimal mode (name, license, etc are not required).
  *
- * @param pkg Package object to validate
- * @param pkgSpec Used to determine what dependency keys should be merged.
+ * @param pkg - Package object to validate
+ * @param pkgSpec - Used to determine what dependency keys should be merged.
  * @param log
- *
- * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
- * @throws {Exceptions.InvalidNpmPackageException} if results indicate package is invalid.
- *
- * @private
  */
 function npmValidate(pkg: INodeTemplate, pkgSpec: string, log: LogOption): void {
     let results: INpmValidateResult = {
@@ -314,16 +300,17 @@ function npmValidate(pkg: INodeTemplate, pkgSpec: string, log: LogOption): void 
  *
  * @param results
  * @param log
- *
- * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
- * @throws {Exceptions.InvalidNpmPackageException} if results indicate package is invalid.
- *
- * @private
  */
 function npmErrors(results: INpmValidateResult, log: LogOption): void {
     // Inspect input.
     if (typeof results !== "object") {
         throw new Exceptions.InvalidArgumentException("'results' must be of type 'object'.");
+    }
+
+    if (log === true) {
+        log = console.log;
+    } else if (!log) {
+        log = () => {};
     }
 
     // Log if requested.
@@ -374,25 +361,20 @@ function npmErrors(results: INpmValidateResult, log: LogOption): void {
 /**
  * Merge specified bower packages together.
  *
- * @param template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/bower-json bower-json}.
- * @param template.name Template MUST have a name.
- * @param paths Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json".
- * @param saveTo If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required.
- * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
- *
- * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
- * @throws {Exceptions.InvalidBowerPackageException} if any package is invalid.
- * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
- *
- * @private
+ * @param template - Template that packages will be merged into. Is validated with [bower-json](https://www.npmjs.com/package/bower-json).
+ * @param paths - Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json".
+ * @param saveTo - If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required.
+ * @param log - If true, progress and errors will be logged. Has no affect on exceptions thrown.
  */
 function bowerMerge(template: IBowerTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
-    // Inspect input.
-    // template (and log)
-    if (log) {
+    if (log === true) {
         log = console.log;
-        log("Inspecting template package...")
+    } else if (!log) {
+        log = () => {};
     }
+
+    // Inspect input template
+    log("Inspecting template package...")
     bowerValidate(JSON.stringify(template));// Throws an exception on failure, so no need for error reporting.
     // paths
     if (!_.isArray(paths)) {
@@ -415,9 +397,7 @@ function bowerMerge(template: IBowerTemplate, paths: string[], saveTo: string|nu
     // Load and validate packages.
     let packages = [];
     for (let filePath of paths) {
-        if (log) {
-            log("Inspecting package at " + filePath);
-        }
+        log("Inspecting package at " + filePath);
         let pkg = JSON.parse(fs.readFileSync(filePath).toString());// We don't use require, as the extension could be different.
         bowerValidate(JSON.stringify(pkg));// As before, no need to log.
         packages.push(pkg);
@@ -436,18 +416,14 @@ function bowerMerge(template: IBowerTemplate, paths: string[], saveTo: string|nu
 
     // Save if requested.
     if (saveTo) {
-        if (log) {
-            log(`Saving generated package to '${saveTo}'`);
-        }
+        log(`Saving generated package to '${saveTo}'`);
         if (!fs.existsSync(path.dirname(saveTo))) {
             fs.mkdirSync(path.dirname(saveTo));
         }
         fs.writeFileSync(saveTo, JSON.stringify(template, null, '    '));
     }
 
-    if (log) {
-        log("All done!");
-    }
+    log("All done!");
 
     // Return package.
     return template;
@@ -456,11 +432,7 @@ function bowerMerge(template: IBowerTemplate, paths: string[], saveTo: string|nu
 /**
  * Performs very basic bower.json spec validation.
  *
- * @param pkgJson JSON representation of a bower.json package.
- *
- * @throws {Exceptions.InvalidBowerPackageException} if provided package is invalid.
- *
- * @private
+ * @param pkgJson - JSON representation of a bower.json package.
  */
 function bowerValidate(pkgJson: string): void {
     const pkg = JSON.parse(pkgJson);
@@ -507,77 +479,59 @@ function bowerValidate(pkgJson: string): void {
 /**
  * Merges typical dependency packages (npm, bower, yarn) into a provided template.
  *
- * @param tml Template to merge packages into.
- * @param pkgs Parsed dependency packages to merge.
- * @param depTypes Dependency types to merge.
+ * @param tml - Template to merge packages into.
+ * @param pkgs - Parsed dependency packages to merge.
+ * @param depTypes - Dependency types to merge.
  * @param log
- *
- * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
- *
- * @private
  */
 function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate>(tml: TTemplate, pkgs: INodeTemplate[], depTypes: string[], log: LogOption): TTemplate {
+    if (log === true) {
+        log = console.log;
+    } else if (!log) {
+        log = () => {};
+    }
+
     // Add resolutions first in case they resolve a dependency collision that cannot be merged.
     if (_.indexOf(depTypes, 'resolutions') !== -1) {
-        if (log) {
-            log("Starting dependency resolution merge.");
-        }
+        log("Starting dependency resolution merge.");
         // Merge resolutions for each package.
         for (let pkg of pkgs) {
             if (!_.isUndefined(pkg.resolutions)) {
-                if (log) {
-                    log(`Starting merge of dependency resolutions from package '${pkg.name}'`);
-                }
+                log(`Starting merge of dependency resolutions from package '${pkg.name}'`);
                 for (let dependency in pkg.resolutions) {
                      // Handle dependency resolution
                     if (tml.resolutions.hasOwnProperty(dependency)) {
-                        if (log) {
-                            log(`Merging dependency resolution '${chalk.cyan(dependency)}' with '${chalk.magenta(tml.resolutions[dependency])}' and '${chalk.magenta(pkg.resolutions[dependency])}'.`);
-                        }
+                        log(`Merging dependency resolution '${chalk.cyan(dependency)}' with '${chalk.magenta(tml.resolutions[dependency])}' and '${chalk.magenta(pkg.resolutions[dependency])}'.`);
                         tml.resolutions[dependency] = handleDependencyCollision(tml.resolutions[dependency], pkg.resolutions[dependency]);
                     }
                     else {
-                        if (log) {
-                            log(`Adding dependency resolution '${chalk.cyan(dependency)}' with '${chalk.magenta(pkg.resolutions[dependency])}'.`);
-                        }
+                        log(`Adding dependency resolution '${chalk.cyan(dependency)}' with '${chalk.magenta(pkg.resolutions[dependency])}'.`);
                         tml.resolutions[dependency] = pkg.resolutions[dependency];
                     }
                 }
-                if (log) {
-                    log(`Finished merge of dependency resolutions from package '${pkg.name}'`);
-                }
+                log(`Finished merge of dependency resolutions from package '${pkg.name}'`);
             }
         }
 
         // Remove 'resolutions' from depTypes.
         _.pull(depTypes, 'resolutions');
 
-        if (log) {
-            log("Finished dependency resolution merge.");
-        }
+        log("Finished dependency resolution merge.");
     }
 
-    if (log) {
-        log("Starting dependency merge.");
-    }
+    log("Starting dependency merge.");
     // Iterate over pkgs
     for (let pkg of pkgs) {
-        if (log) {
-            log(`Starting merge of dependencies from package '${pkg.name}'`);
-        }
+        log(`Starting merge of dependencies from package '${pkg.name}'`);
         // And dependency types...
         for (let dependencyType of depTypes) {
             if (dependencyType in pkg) {
-                if (log) {
-                    log(`Merging dependency type '${dependencyType}'`);
-                }
+                log(`Merging dependency type '${dependencyType}'`);
                 // ...for each package
                 for (let dependency in pkg[dependencyType]) {
                     // Handle dependency
                     if (tml[dependencyType].hasOwnProperty(dependency)) {
-                        if (log) {
-                            log(`Merging dependency '${chalk.cyan(dependency)}' with '${chalk.magenta(tml[dependencyType][dependency])}' and '${chalk.magenta(pkg[dependencyType][dependency])}'.`);
-                        }
+                        log(`Merging dependency '${chalk.cyan(dependency)}' with '${chalk.magenta(tml[dependencyType][dependency])}' and '${chalk.magenta(pkg[dependencyType][dependency])}'.`);
                         try {
                             // Try to resolve dependency collision.
                             tml[dependencyType][dependency] = handleDependencyCollision(tml[dependencyType][dependency], pkg[dependencyType][dependency]);
@@ -586,36 +540,26 @@ function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate
                             // Dependency collision failed, do we have resolutions and if so, is this collision resolved by it?
                             if (!_.isUndefined(tml.resolutions) && !_.isUndefined(tml.resolutions[dependency])) {
                                 // It is!
-                                if (log) {
-                                    log(chalk.bgGreen("Dependency conflict detected, resolved by resolution."));
-                                }
+                                log(chalk.bgGreen("Dependency conflict detected, resolved by resolution."));
                                 tml[dependencyType][dependency] = tml.resolutions[dependency];
                             }
                             else {
                                 // Nope!
-                                if (log) {
-                                    log(chalk.bgRed("Dependency conflict detected!"));
-                                }
+                                log(chalk.bgRed("Dependency conflict detected!"));
                                 throw e;
                             }
                         }
                     }
                     else {
-                        if (log) {
-                            log(`Adding dependency '${chalk.cyan(dependency)}' with '${chalk.magenta(pkg[dependencyType][dependency])}'.`);
-                        }
+                        log(`Adding dependency '${chalk.cyan(dependency)}' with '${chalk.magenta(pkg[dependencyType][dependency])}'.`);
                         tml[dependencyType][dependency] = pkg[dependencyType][dependency];
                     }
                 }
             }
         }
-        if (log) {
-            log(`Finished merge of dependencies from package '${pkg.name}'`);
-        }
+        log(`Finished merge of dependencies from package '${pkg.name}'`);
     }
-    if (log) {
-        log("Finished dependency merge.");
-    }
+    log("Finished dependency merge.");
 
     return tml;
 }
@@ -623,12 +567,8 @@ function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate
 /**
  * Returns the intersection of both semver ranges if both valid semver ranges. If incoming version isn't a valid semver range, it acts as a override and is returned instead.
  *
- * @param currentVersion The existing package version value.
- * @param incomingVersion The incoming package version value to handle.
- *
- * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
- *
- * @private
+ * @param currentVersion - The existing package version value.
+ * @param incomingVersion - The incoming package version value to handle.
  */
 function handleDependencyCollision(currentVersion: string, incomingVersion: string): string {
     // If packageVersion is a valid semver range, currentVersion must also be valid.

@@ -6,5 +6,12 @@ export {
     InvalidArgumentException,
 } from "node-exceptions";
 
+/**
+ * @public
+ */
 export class InvalidNodePackageException extends LogicalException {};
+
+/**
+ * @public
+ */
 export class InvalidBowerPackageException extends LogicalException {};

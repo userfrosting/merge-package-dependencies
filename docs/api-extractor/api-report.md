@@ -7,11 +7,52 @@
 import { InvalidArgumentException } from 'node-exceptions';
 import { LogicalException } from 'node-exceptions';
 
-// Warning: (ae-forgotten-export) The symbol "IBowerTemplate" needs to be exported by the entry point main.d.ts
-// Warning: (ae-forgotten-export) The symbol "LogOption" needs to be exported by the entry point main.d.ts
-//
 // @public
 export function bower(template: IBowerTemplate, paths: string[], saveTo?: string | null, log?: LogOption): {};
+
+// @public (undocumented)
+export interface IBowerTemplate {
+    // (undocumented)
+    dependencies?: {
+        [x: string]: string;
+    };
+    // (undocumented)
+    devDependencies?: {
+        [x: string]: string;
+    };
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    resolutions?: {
+        [x: string]: string;
+    };
+}
+
+// @public (undocumented)
+export interface INodeTemplate {
+    // (undocumented)
+    dependencies?: {
+        [x: string]: string;
+    };
+    // (undocumented)
+    devDependencies?: {
+        [x: string]: string;
+    };
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    peerDependencies?: {
+        [x: string]: string;
+    };
+    // (undocumented)
+    private?: boolean;
+    // (undocumented)
+    resolutions?: {
+        [x: string]: string;
+    };
+    // (undocumented)
+    version: string;
+}
 
 export { InvalidArgumentException }
 
@@ -25,8 +66,9 @@ export class InvalidNodePackageException extends LogicalException {
 
 export { LogicalException }
 
-// Warning: (ae-forgotten-export) The symbol "INodeTemplate" needs to be exported by the entry point main.d.ts
-//
+// @public (undocumented)
+export type LogOption = boolean | ((message?: any, ...optionalParams: any[]) => void);
+
 // @public
 export function npm(template: INodeTemplate, paths: string[], saveTo?: string | null, log?: LogOption): {};
 
