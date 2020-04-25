@@ -1,10 +1,21 @@
-const semver = require("semver");
-const semverIntersect = require("semver-intersect").intersect;
-const packageJsonValidator = require("package-json-validator").PJV.validate;
-const fs = require("fs-extra");
-const path = require("path");
-const _ = require("lodash");
-const exceptions = require("./exceptions.js");
+import semver from "semver";
+import { intersect as semverIntersect } from "semver-intersect";
+import { PJV, INpmValidateResult } from "package-json-validator";
+import fs from "fs-extra";
+import path from "path";
+import _ from "lodash";
+import chalk from "chalk";
+import * as yarnLockParser from "@yarnpkg/lockfile";
+import * as Exceptions from "./exceptions.js";
+
+export {
+    LogicalException,
+    InvalidArgumentException,
+    InvalidNodePackageException,
+    InvalidBowerPackageException,
+} from "./exceptions.js";
+
+const packageJsonValidator = PJV.validate;
 
 // Known dependency keys
 const npmDependencyTypes = [
@@ -24,83 +35,89 @@ const bowerDependencyTypes = [
     "resolutions"
 ];
 
+interface INodeTemplate {
+    name: string;
+    private?: boolean;
+    version: string;
+    dependencies?: { [x: string]: string };
+    devDependencies?: { [x: string]: string };
+    peerDependencies?: { [x: string]: string };
+    resolutions?: { [x: string]: string };
+}
+
+interface IBowerTemplate {
+    name: string;
+    dependencies?: { [x: string]: string };
+    devDependencies?: { [x: string]: string };
+    resolutions?: { [x: string]: string };
+}
+
+type LogOption = false | ((message?: any, ...optionalParams: any[]) => void);
+
 
 /**
  * Merge specified npm packages together.
  *
- * @param {object} template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/package-json-validator package-json-validator} with template.private == true overriding this.
- * @param {string[]} paths Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
- * @param {string} [saveTo=null] If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
- * @param {boolean} [log=false] If true, progress and errors will be logged. Has no affect on exceptions thrown.
+ * @param template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/package-json-validator package-json-validator} with template.private == true overriding this.
+ * @param paths Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
+ * @param saveTo If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
+ * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
  *
- * @return {object}
- *
- * @throws {InvalidArgumentException} if a provided argument cannot be used.
- * @throws {InvalidNpmPackageException} if any package is invalid.
- * @throws {LogicalException} if a inputs provided cannot be logically processed according to defined behaviour.
+ * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
+ * @throws {Exceptions.InvalidNpmPackageException} if any package is invalid.
+ * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
  */
-exports.npm = function(template, paths, saveTo = null, log = false) {
+export function npm(template: INodeTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
     return packageJsonMerge(template, paths, saveTo, log, "npm");
 };
 
 /**
  * Merge specified yarn packages together.
  *
- * @param {object} template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/package-json-validator package-json-validator} with template.private == true overriding this.
- * @param {string[]} paths Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
- * @param {string} [saveTo=null] If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
- * @param {boolean} [log=false] If true, progress and errors will be logged. Has no affect on exceptions thrown.
+ * @param template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/package-json-validator package-json-validator} with template.private == true overriding this.
+ * @param paths Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
+ * @param saveTo If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
+ * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
  *
- * @return {object}
- *
- * @throws {InvalidArgumentException} if a provided argument cannot be used.
- * @throws {InvalidNpmPackageException} if any package is invalid.
- * @throws {LogicalException} if a inputs provided cannot be logically processed according to defined behaviour.
+ * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
+ * @throws {Exceptions.InvalidNpmPackageException} if any package is invalid.
+ * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
  */
-exports.yarn = function(template, paths, saveTo = null, log = false) {
+export function yarn(template: INodeTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
     return packageJsonMerge(template, paths, saveTo, log, "yarn");
 }
 
 /**
  * Merge specified bower packages together.
  *
- * @param {object} template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/bower-json bower-json}.
- * @param {string} template.name Template MUST have a name.
- * @param {string[]} paths Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json".
- * @param {string} [saveTo=null] If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required.
- * @param {boolean} [log=false] If true, progress and errors will be logged. Has no affect on exceptions thrown.
+ * @param template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/bower-json bower-json}.
+ * @param template.name Template MUST have a name.
+ * @param paths Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json".
+ * @param saveTo If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required.
+ * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
  *
- * @return {object}
- *
- * @throws {InvalidArgumentException} if a provided argument cannot be used.
- * @throws {InvalidBowerPackageException} if any package is invalid.
- * @throws {LogicalException} if a inputs provided cannot be logically processed according to defined behaviour.
+ * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
+ * @throws {Exceptions.InvalidBowerPackageException} if any package is invalid.
+ * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
  */
-exports.bower = function(template, paths, saveTo = null, log = false) {
+export function bower(template: IBowerTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
     return bowerMerge(template, paths, saveTo, log);
 };
 
 /**
  * Uses `yarn.lock` to detect if multiple versions of a dependency have been installed.
  *
- * @param {string} [p=process.cwd()] Directory of `yarn.lock`.
- * @param {boolean} [log=false] If true, progress and errors will be logged. Has no affect on exceptions thrown.
- *
- * @return {boolean}
+ * @param p Directory of `yarn.lock`.
+ * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
  */
-exports.yarnIsFlat = function(p = process.cwd(), log = false) {
-    // Load lockfile parser
-    const lockfile = require('@yarnpkg/lockfile');
-    // Grab some chalk
-    let chalk = require('chalk');
-
-    // Normalise provided directory
+export function yarnIsFlat(p: string = process.cwd(), log: LogOption = false): boolean {
+    // Normalize provided directory
     p = path.normalize(p + '/');
 
     if (log) console.log(`Checking for duplicate dependencies with '${p + 'yarn.lock'}'`);
 
     // Parse lockfile
-    let yarnLock = lockfile.parse(fs.readFileSync(p + 'yarn.lock', 'utf8')).object;
+    let yarnLock = yarnLockParser.parse(fs.readFileSync(p + 'yarn.lock', 'utf8')).object;
 
     // Collect dependencies, versions and ranges. Flip switch if duplicates identified.
     let deps = {};
@@ -159,39 +176,23 @@ exports.yarnIsFlat = function(p = process.cwd(), log = false) {
 }
 
 /**
- * Exceptions usable within package, exposed for convience during error handling.
- * - LogicalException
- * - DomainException
- * - InvalidArgumentExcepetion
- * - RangeException
- * - RuntimeException
- * - HttpException
- * - InvalidNpmPackageException
- * - InvalidBowerPackageException
- * @namespace
- */
-exports.exceptions = exceptions;
-
-/**
  * Merge specified packages together. (supports npm and yarn)
  *
- * @param {object} template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/package-json-validator package-json-validator}.
- * @param {string} template.name Template MUST have a name.
- * @param {string} template.version Template MUST have a version.
- * @param {string[]} paths Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
- * @param {string|null} saveTo If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
- * @param {boolean} log If true, progress and errors will be logged. Has no affect on exceptions thrown.
- * @param {string} packageSpec Used to determine what dependency keys should be merged.
+ * @param template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/package-json-validator package-json-validator}.
+ * @param template.name Template MUST have a name.
+ * @param template.version Template MUST have a version.
+ * @param paths Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
+ * @param saveTo If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
+ * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
+ * @param packageSpec Used to determine what dependency keys should be merged.
  *
- * @return {object}
- *
- * @throws {InvalidArgumentException} if a provided argument cannot be used.
- * @throws {InvalidNpmPackageException} if any package is invalid.
- * @throws {LogicalException} if a inputs provided cannot be logically processed according to defined behaviour.
+ * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
+ * @throws {Exceptions.InvalidNpmPackageException} if any package is invalid.
+ * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
  *
  * @private
  */
-function packageJsonMerge(template, paths, saveTo, log, packageSpec) {
+function packageJsonMerge(template: INodeTemplate, paths: string[], saveTo: string|null, log: LogOption, packageSpec: string): {} {
     // Inspect input.
     // template (and log)
     if (log) {
@@ -202,7 +203,7 @@ function packageJsonMerge(template, paths, saveTo, log, packageSpec) {
     npmValidate(template, packageSpec, log);
     // paths
     if (!_.isArray(paths)) {
-        throw new exceptions.InvalidArgumentException("'paths' must be an array.");
+        throw new Exceptions.InvalidArgumentException("'paths' must be an array.");
     }
     paths.forEach(function(p, index, array) {// Resolve to complete path now.
         if (p.match(/\\$|\/$/)) {
@@ -224,7 +225,7 @@ function packageJsonMerge(template, paths, saveTo, log, packageSpec) {
         if (log) {
             log("Inspecting package at " + filePath);
         }
-        let pkg = JSON.parse(fs.readFileSync(filePath));// We don't use require, as the extension could be different. Plus require aggressively caches.
+        let pkg = JSON.parse(fs.readFileSync(filePath).toString());// We don't use require, as the extension could be different. Plus require aggressively caches.
         npmValidate(pkg, packageSpec, log);
         packages.push(pkg);
     }
@@ -253,7 +254,7 @@ function packageJsonMerge(template, paths, saveTo, log, packageSpec) {
         }
         // Make directories if needed.
         if (!fs.existsSync(path.dirname(saveTo))) {
-            fs.mkdirsSync(path.dirname(saveTo));
+            fs.mkdirSync(path.dirname(saveTo));
         }
         fs.writeFileSync(saveTo, JSON.stringify(template, null, '    '));
     }
@@ -269,17 +270,17 @@ function packageJsonMerge(template, paths, saveTo, log, packageSpec) {
 /**
  * Validates npm package. When private == true, validation goes into minimal mode (name, license, etc are not required).
  *
- * @param {object} pkg Package object to validate
- * @param {string} pkgSpec Used to determine what dependency keys should be merged.
- * @param {console.log|boolean} [log=false]
+ * @param pkg Package object to validate
+ * @param pkgSpec Used to determine what dependency keys should be merged.
+ * @param log
  *
- * @throws {InvalidArgumentException} if a provided argument cannot be used.
- * @throws {InvalidNpmPackageException} if results indicate package is invalid.
+ * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
+ * @throws {Exceptions.InvalidNpmPackageException} if results indicate package is invalid.
  *
  * @private
  */
-function npmValidate(pkg, pkgSpec, log) {
-    let results = {
+function npmValidate(pkg: INodeTemplate, pkgSpec: string, log: LogOption): void {
+    let results: INpmValidateResult = {
         valid: true
     };
     // If package.private == true, we only inspect touched fields.
@@ -311,25 +312,22 @@ function npmValidate(pkg, pkgSpec, log) {
 /**
  * Handles errors from npm package validation. When log = true, logs critical errors, errors, warnings, and recommendations from npm package validation to the console.
  *
- * @param {object} results
- * @param {console.log|boolean} [log=false]
+ * @param results
+ * @param log
  *
- * @throws {InvalidArgumentException} if a provided argument cannot be used.
- * @throws {InvalidNpmPackageException} if results indicate package is invalid.
+ * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
+ * @throws {Exceptions.InvalidNpmPackageException} if results indicate package is invalid.
  *
  * @private
  */
-function npmErrors(results, log) {
+function npmErrors(results: INpmValidateResult, log: LogOption): void {
     // Inspect input.
     if (typeof results !== "object") {
-        throw new exceptions.InvalidArgumentException("'results' must be of type 'object'.");
+        throw new Exceptions.InvalidArgumentException("'results' must be of type 'object'.");
     }
 
     // Log if requested.
     if (log) {
-        // Grab some chalk!
-        let chalk = require("chalk");
-
         // Announce critical errors.
         if (results.critical) {
             log(chalk.bgRed("Critical Error: ") + chalk.red(results.critical));
@@ -351,7 +349,7 @@ function npmErrors(results, log) {
             }
         }
 
-        // Announnce recommendations.
+        // Announce recommendations.
         if (results.recommendations) {
             log(chalk.underline("Recommendations:"));
             for (let recommendation of results.recommendations) {
@@ -369,28 +367,26 @@ function npmErrors(results, log) {
     }
 
     if (!results.valid) {
-        throw new exceptions.InvalidNpmPackageException("Package is invalid. Inspection results:\n" + JSON.stringify(results, null, '    '));
+        throw new Exceptions.InvalidNodePackageException("Package is invalid. Inspection results:\n" + JSON.stringify(results, null, '    '));
     }
 }
 
 /**
  * Merge specified bower packages together.
  *
- * @param {object} template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/bower-json bower-json}.
- * @param {string} template.name Template MUST have a name.
- * @param {string[]} paths Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json".
- * @param {string} [saveTo=null] If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required.
- * @param {boolean} [log=false] If true, progress and errors will be logged. Has no affect on exceptions thrown.
+ * @param template Template that packages will be merged into. Is validated with {@link https://www.npmjs.com/package/bower-json bower-json}.
+ * @param template.name Template MUST have a name.
+ * @param paths Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json".
+ * @param saveTo If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required.
+ * @param log If true, progress and errors will be logged. Has no affect on exceptions thrown.
  *
- * @return {object}
- *
- * @throws {InvalidArgumentException} if a provided argument cannot be used.
- * @throws {InvalidBowerPackageException} if any package is invalid.
- * @throws {LogicalException} if a inputs provided cannot be logically processed according to defined behaviour.
+ * @throws {Exceptions.InvalidArgumentException} if a provided argument cannot be used.
+ * @throws {Exceptions.InvalidBowerPackageException} if any package is invalid.
+ * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
  *
  * @private
  */
-function bowerMerge(template, paths, saveTo = null, log = false) {
+function bowerMerge(template: IBowerTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
     // Inspect input.
     // template (and log)
     if (log) {
@@ -400,7 +396,7 @@ function bowerMerge(template, paths, saveTo = null, log = false) {
     bowerValidate(JSON.stringify(template));// Throws an exception on failure, so no need for error reporting.
     // paths
     if (!_.isArray(paths)) {
-        throw new exceptions.InvalidArgumentException("'paths' must be an array.");
+        throw new Exceptions.InvalidArgumentException("'paths' must be an array.");
     }
     paths.forEach(function(p, index, array) {// Resolve to complete path now.
         if (p.match(/\\$|\/$/)) {
@@ -422,7 +418,7 @@ function bowerMerge(template, paths, saveTo = null, log = false) {
         if (log) {
             log("Inspecting package at " + filePath);
         }
-        let pkg = JSON.parse(fs.readFileSync(filePath));// We don't use require, as the extension could be different.
+        let pkg = JSON.parse(fs.readFileSync(filePath).toString());// We don't use require, as the extension could be different.
         bowerValidate(JSON.stringify(pkg));// As before, no need to log.
         packages.push(pkg);
     }
@@ -444,7 +440,7 @@ function bowerMerge(template, paths, saveTo = null, log = false) {
             log(`Saving generated package to '${saveTo}'`);
         }
         if (!fs.existsSync(path.dirname(saveTo))) {
-            fs.mkdirsSync(path.dirname(saveTo));
+            fs.mkdirSync(path.dirname(saveTo));
         }
         fs.writeFileSync(saveTo, JSON.stringify(template, null, '    '));
     }
@@ -460,44 +456,48 @@ function bowerMerge(template, paths, saveTo = null, log = false) {
 /**
  * Performs very basic bower.json spec validation.
  *
- * @param {string} pkgJson JSON representation of a bower.json package.
+ * @param pkgJson JSON representation of a bower.json package.
  *
- * @throws {InvalidBowerPackageException} if provided package is invalid.
+ * @throws {Exceptions.InvalidBowerPackageException} if provided package is invalid.
  *
  * @private
  */
-function bowerValidate(pkgJson) {
-    pkg = JSON.parse(pkgJson);
+function bowerValidate(pkgJson: string): void {
+    const pkg = JSON.parse(pkgJson);
     if (!_.isObject(pkg)) {
-        throw new exceptions.InvalidBowerPackageException("Root of package MUST be an object.");
+        throw new Exceptions.InvalidBowerPackageException("Root of package MUST be an object.");
     }
+    // @ts-ignore
     if (!_.isString(pkg.name)) {
-        throw new exceptions.InvalidBowerPackageException("Package name MUST be a string.");
+        throw new Exceptions.InvalidBowerPackageException("Package name MUST be a string.");
     }
     // Now we'll give the used dependency properties a check.
     for (let dependencyType of bowerDependencyTypes) {
         if (pkg.hasOwnProperty(dependencyType)) {
             if (!_.isObject(pkg[dependencyType])) {
-                throw new exceptions.InvalidBowerPackageException(`Package's '${dependencyType}' property MUST be an object.`)
+                throw new Exceptions.InvalidBowerPackageException(`Package's '${dependencyType}' property MUST be an object.`)
             }
             else {
                 for (let pkgDep in pkg[dependencyType]) {
                     if (!_.isString(pkg[dependencyType][pkgDep])) {
-                        throw new exceptions.InvalidBowerPackageException(`Invalid value for ${dependencyType}->${pkgDep} in package.`);
+                        throw new Exceptions.InvalidBowerPackageException(`Invalid value for ${dependencyType}->${pkgDep} in package.`);
                     }
                 }
             }
         }
     }
     // And make sure resolutions match the expected form.
-    if (pkg.hasOwnProperty('reolutions')) {
+    if ("resolutions" in pkg) {
+        // @ts-ignore
         if (!_.isObject(pkg.resolutions)) {
-            throw new exceptions.InvalidBowerPackageException(`Package's 'resolutions' property MUST be an object.`)
+            throw new Exceptions.InvalidBowerPackageException(`Package's 'resolutions' property MUST be an object.`)
         }
         else {
+            // @ts-ignore
             for (let pkgRes in pkg.resolutions) {
+                // @ts-ignore
                 if (!_.isString(pkg.resolutions[pkgRes])) {
-                    throw new exceptions.InvalidBowerPackageException(`Invalid value for resolutions->${pkgDep} in package.`);
+                    throw new Exceptions.InvalidBowerPackageException(`Invalid value for resolutions->${pkgRes} in package.`);
                 }
             }
         }
@@ -505,20 +505,18 @@ function bowerValidate(pkgJson) {
 }
 
 /**
- * Merges typical dependency pacakges (npm, bower, yarn) into a provided template.
+ * Merges typical dependency packages (npm, bower, yarn) into a provided template.
  *
- * @param {object} tml Template to merge packages into.
- * @param {object[]} pkgs Parsed dependency packages to merge.
- * @param {string[]} depTypes Dependency types to merge.
- * @param {console.log|boolean} log
+ * @param tml Template to merge packages into.
+ * @param pkgs Parsed dependency packages to merge.
+ * @param depTypes Dependency types to merge.
+ * @param log
  *
- * @throws {LogicalException} if a inputs provided cannot be logically processed according to defined behaviour.
+ * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
  *
  * @private
  */
-function mergePackageDependencies(tml, pkgs, depTypes, log) {
-    let chalk = require("chalk");
-
+function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate>(tml: TTemplate, pkgs: INodeTemplate[], depTypes: string[], log: LogOption): TTemplate {
     // Add resolutions first in case they resolve a dependency collision that cannot be merged.
     if (_.indexOf(depTypes, 'resolutions') !== -1) {
         if (log) {
@@ -625,20 +623,18 @@ function mergePackageDependencies(tml, pkgs, depTypes, log) {
 /**
  * Returns the intersection of both semver ranges if both valid semver ranges. If incoming version isn't a valid semver range, it acts as a override and is returned instead.
  *
- * @param {string} currentVersion The existing package version value.
- * @param {string} incomingVersion The incoming package version value to handle.
+ * @param currentVersion The existing package version value.
+ * @param incomingVersion The incoming package version value to handle.
  *
- * @return {string}
- *
- * @throws {LogicalException} if a inputs provided cannot be logically processed according to defined behaviour.
+ * @throws {Exceptions.LogicalException} if a inputs provided cannot be logically processed according to defined behavior.
  *
  * @private
  */
-function handleDependencyCollision(currentVersion, incomingVersion) {
+function handleDependencyCollision(currentVersion: string, incomingVersion: string): string {
     // If packageVersion is a valid semver range, currentVersion must also be valid.
     if (semver.valid(incomingVersion) || semver.validRange(incomingVersion)) {
         if (!semver.valid(currentVersion) && !semver.validRange(currentVersion)) {
-            throw new exceptions.LogicalException("An incoming package semver version range requires the current version to also be valid semver range.\nIncoming: " + incomingVersion + "\nCurrent: " + currentVersion);
+            throw new Exceptions.LogicalException("An incoming package semver version range requires the current version to also be valid semver range.\nIncoming: " + incomingVersion + "\nCurrent: " + currentVersion);
         }
         else {
             // Intersect semver ranges.
@@ -676,7 +672,7 @@ function handleDependencyCollision(currentVersion, incomingVersion) {
                                     }
                                 }
                                 // Make sure generated output is a valid semver range.
-                                if (!semver.validRange(output)) throw new exceptions.LogicalException("Cannot produced valid semver range. Range generated: " + output);
+                                if (!semver.validRange(output)) throw new Exceptions.LogicalException("Cannot produced valid semver range. Range generated: " + output);
                                 return output;
                             };
                             if (currentVersion.includes("||")) {
@@ -697,27 +693,26 @@ function handleDependencyCollision(currentVersion, incomingVersion) {
                                 return elaborateMerge(incomingVersion, currentVersion);
                             } else {
                                 // If we get here, there looks to be a semver range contradiction.
-                                throw new exceptions.LogicalException('Semver ranges could not be intersected. Ranges may contradict each other.')
+                                throw new Exceptions.LogicalException('Semver ranges could not be intersected. Ranges may contradict each other.')
                             }
                         }
                         catch (e) {
-                            throw new exceptions.LogicalException(`Cannot merge semver ranges "${currentVersion}" and "${incomingVersion}".`)
+                            throw new Exceptions.LogicalException(`Cannot merge semver ranges "${currentVersion}" and "${incomingVersion}".`)
                         }
                         // Otherwise just join, and inspect.
                         let intersection = currentVersion + " " + incomingVersion;
                         if (!semver.validRange(intersection)) {
-                            throw new exceptions.LogicalException(`'${currentVersion}' and '${incomingVersion}' cannot be combined to make a valid semver range.`);
+                            throw new Exceptions.LogicalException(`'${currentVersion}' and '${incomingVersion}' cannot be combined to make a valid semver range.`);
                         }
                         return intersection;
                     }
                 }
             }
             catch (e) {// We wrap the thrown exception in a LogicalException, so that its easier to handle.
-                throw new exceptions.LogicalException(e);
+                throw new Exceptions.LogicalException(e);
             }
         }
     } else {
-        let chalk = require("chalk");
         console.log(chalk.bgRed("Non-semver dependency version value detected. Override triggered. Value: ") + chalk.bgMagenta(incomingVersion));
         return incomingVersion;
     }

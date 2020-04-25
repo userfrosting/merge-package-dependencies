@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unknown]
 
+This release is mainly focused on bringing project tooling up to date.
+
+### Added
+- Used exception types are now exported.
+- TypeScript types.
+
+### Changed
+- Major tooling refactor, API remains unchanged however exports may behave differently.
+- Major version updates for dependencies (`chalk` from 2.4.1 to 4).
+
 ## [1.2.1]
 ### Changed
 - Updated dependencies.

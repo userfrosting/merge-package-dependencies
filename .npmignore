@@ -1,0 +1,17 @@
+!dist/
+test-resources/
+.editorconfig
+.gitattributes
+.nyc_output/
+.travis.yml
+**/*.test.d.ts
+**/*.test.js
+**/*.test.js.map
+**/test-util.js
+api-extractor.json
+dist/index.d.ts
+src/
+temp/
+test-data/
+tsconfig.json
+.github

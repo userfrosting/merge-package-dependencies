@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+        "module": "esnext",
+        "moduleResolution": "node",
+        "lib": [
+            "es2015"
+        ],
+        "allowSyntheticDefaultImports": true,
+        "noEmitHelpers": true,
+        "declaration": true,
+        "target": "es2017",
+        "outDir": "./dist/",
+        "sourceMap": true,
+        // TODO: Enable strict mode
+        "strict": false
+    }
+}
