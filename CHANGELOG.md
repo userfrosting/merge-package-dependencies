@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.1] - 2020-04-27
+
 ### Fixed
 - Unnamed packages being identified as `undefined` in logging. File path will now be used as a fallback.
 - Optional template fields mistakenly marked as required.
