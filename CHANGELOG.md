@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unknown]
+## [Unreleased]
 
-## [2.0.0]
+### Fixed
+- Unnamed packages being identified as `undefined` in logging. File path will now be used as a fallback.
+- Optional template fields mistakenly marked as required.
+
+## [2.0.0] - 2020-04-25
 
 This release is mainly focused on bringing project tooling up to date.
 
@@ -18,7 +22,7 @@ This release is mainly focused on bringing project tooling up to date.
 - Major tooling refactor, API remains unchanged however exports may behave differently.
 - Major version updates for dependencies (`chalk` from 2.4.1 to 4, `fs-extra` from 7.0.1 to 9, `semver` from 5.6 to 7).
 
-## [1.2.1]
+## [1.2.1] 2018-11-22
 ### Changed
 - Updated dependencies.
 

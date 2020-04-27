@@ -39,7 +39,7 @@ export interface INodeTemplate {
         [x: string]: string;
     };
     // (undocumented)
-    name: string;
+    name?: string;
     // (undocumented)
     peerDependencies?: {
         [x: string]: string;
@@ -51,7 +51,7 @@ export interface INodeTemplate {
         [x: string]: string;
     };
     // (undocumented)
-    version: string;
+    version?: string;
 }
 
 export { InvalidArgumentException }

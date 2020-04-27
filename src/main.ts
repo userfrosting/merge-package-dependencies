@@ -39,9 +39,9 @@ const bowerDependencyTypes = [
  * @public
  */
 export interface INodeTemplate {
-    name: string;
+    name?: string;
     private?: boolean;
-    version: string;
+    version?: string;
     dependencies?: { [x: string]: string };
     devDependencies?: { [x: string]: string };
     peerDependencies?: { [x: string]: string };
@@ -56,6 +56,10 @@ export interface IBowerTemplate {
     dependencies?: { [x: string]: string };
     devDependencies?: { [x: string]: string };
     resolutions?: { [x: string]: string };
+}
+
+interface ITemplatePath {
+    path: string;
 }
 
 /**
@@ -225,11 +229,12 @@ function packageJsonMerge(template: INodeTemplate, paths: string[], saveTo: stri
     }
 
     // Load and validate packages.
-    let packages = [];
+    let packages: (INodeTemplate & ITemplatePath)[] = [];
     for (let filePath of paths) {
         log("Inspecting package at " + filePath);
         let pkg = JSON.parse(fs.readFileSync(filePath).toString());// We don't use require, as the extension could be different. Plus require aggressively caches.
         npmValidate(pkg, packageSpec, log);
+        pkg.path = filePath;
         packages.push(pkg);
     }
 
@@ -404,11 +409,12 @@ function bowerMerge(template: IBowerTemplate, paths: string[], saveTo: string|nu
     }
 
     // Load and validate packages.
-    let packages = [];
+    let packages: (IBowerTemplate & ITemplatePath)[] = [];
     for (let filePath of paths) {
         log("Inspecting package at " + filePath);
         let pkg = JSON.parse(fs.readFileSync(filePath).toString());// We don't use require, as the extension could be different.
         bowerValidate(JSON.stringify(pkg));// As before, no need to log.
+        pkg.path = filePath;
         packages.push(pkg);
     }
 
@@ -493,7 +499,7 @@ function bowerValidate(pkgJson: string): void {
  * @param depTypes - Dependency types to merge.
  * @param log
  */
-function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate>(tml: TTemplate, pkgs: INodeTemplate[], depTypes: string[], log: LogOption): TTemplate {
+function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate>(tml: TTemplate, pkgs: (TTemplate & ITemplatePath)[], depTypes: string[], log: LogOption): TTemplate {
     if (log === true) {
         log = console.log;
     } else if (!log) {
@@ -566,7 +572,7 @@ function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate
                 }
             }
         }
-        log(`Finished merge of dependencies from package '${pkg.name}'`);
+        log(`Finished merge of dependencies from package '${pkg.name ?? pkg.path}'`);
     }
     log("Finished dependency merge.");
 
