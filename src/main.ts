@@ -512,7 +512,7 @@ function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate
         // Merge resolutions for each package.
         for (let pkg of pkgs) {
             if (!_.isUndefined(pkg.resolutions)) {
-                log(`Starting merge of dependency resolutions from package '${pkg.name}'`);
+                log(`Starting merge of dependency resolutions from package '${pkg.name ?? pkg.path}'`);
                 for (let dependency in pkg.resolutions) {
                      // Handle dependency resolution
                     if (tml.resolutions.hasOwnProperty(dependency)) {
@@ -524,7 +524,7 @@ function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate
                         tml.resolutions[dependency] = pkg.resolutions[dependency];
                     }
                 }
-                log(`Finished merge of dependency resolutions from package '${pkg.name}'`);
+                log(`Finished merge of dependency resolutions from package '${pkg.name ?? pkg.path}'`);
             }
         }
 
@@ -537,7 +537,7 @@ function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate
     log("Starting dependency merge.");
     // Iterate over pkgs
     for (let pkg of pkgs) {
-        log(`Starting merge of dependencies from package '${pkg.name}'`);
+        log(`Starting merge of dependencies from package '${pkg.name ?? pkg.path}'`);
         // And dependency types...
         for (let dependencyType of depTypes) {
             if (dependencyType in pkg) {
