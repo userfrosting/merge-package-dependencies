@@ -78,7 +78,7 @@ export type LogOption = boolean | ((message?: any, ...optionalParams: any[]) => 
  *
  * @public
  */
-export function npm(template: INodeTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
+export function npm<TTemplate extends INodeTemplate>(template: TTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): TTemplate {
     return packageJsonMerge(template, paths, saveTo, log, "npm");
 };
 
@@ -92,7 +92,7 @@ export function npm(template: INodeTemplate, paths: string[], saveTo: string|nul
  *
  * @public
  */
-export function yarn(template: INodeTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
+export function yarn<TTemplate extends INodeTemplate>(template: TTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): TTemplate {
     return packageJsonMerge(template, paths, saveTo, log, "yarn");
 }
 
@@ -106,7 +106,7 @@ export function yarn(template: INodeTemplate, paths: string[], saveTo: string|nu
  *
  * @public
  */
-export function bower(template: IBowerTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
+export function bower<TTemplate extends IBowerTemplate>(template: TTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): TTemplate {
     return bowerMerge(template, paths, saveTo, log);
 };
 
@@ -198,7 +198,7 @@ export function yarnIsFlat(p: string = process.cwd(), log: LogOption = false): b
  * @param log - If true, progress and errors will be logged. Has no affect on exceptions thrown.
  * @param packageSpec - Used to determine what dependency keys should be merged.
  */
-function packageJsonMerge(template: INodeTemplate, paths: string[], saveTo: string|null, log: LogOption, packageSpec: string): {} {
+function packageJsonMerge<TTemplate extends INodeTemplate>(template: TTemplate, paths: string[], saveTo: string|null, log: LogOption, packageSpec: string): TTemplate {
     if (log === true) {
         log = console.log;
     } else if (!log) {
@@ -380,7 +380,7 @@ function npmErrors(results: INpmValidateResult, log: LogOption): void {
  * @param saveTo - If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required.
  * @param log - If true, progress and errors will be logged. Has no affect on exceptions thrown.
  */
-function bowerMerge(template: IBowerTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): {} {
+function bowerMerge<TTemplate extends IBowerTemplate>(template: TTemplate, paths: string[], saveTo: string|null = null, log: LogOption = false): TTemplate {
     if (log === true) {
         log = console.log;
     } else if (!log) {
@@ -499,7 +499,9 @@ function bowerValidate(pkgJson: string): void {
  * @param depTypes - Dependency types to merge.
  * @param log
  */
-function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate>(tml: TTemplate, pkgs: (TTemplate & ITemplatePath)[], depTypes: string[], log: LogOption): TTemplate {
+function mergePackageDependencies<TTemplate extends INodeTemplate, TPackages extends INodeTemplate & ITemplatePath>(tml: TTemplate, pkgs: TPackages[], depTypes: string[], log: LogOption): TTemplate;
+function mergePackageDependencies<TTemplate extends IBowerTemplate, TPackages extends IBowerTemplate & ITemplatePath>(tml: TTemplate, pkgs: TPackages[], depTypes: string[], log: LogOption): TTemplate;
+function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate>(tml: TTemplate, pkgs: ((INodeTemplate | IBowerTemplate) & ITemplatePath)[], depTypes: string[], log: LogOption): TTemplate {
     if (log === true) {
         log = console.log;
     } else if (!log) {

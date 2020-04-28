@@ -9,19 +9,19 @@ Merge specified npm packages together.
 <b>Signature:</b>
 
 ```typescript
-export declare function npm(template: INodeTemplate, paths: string[], saveTo?: string | null, log?: LogOption): {};
+export declare function npm<TTemplate extends INodeTemplate>(template: TTemplate, paths: string[], saveTo?: string | null, log?: LogOption): TTemplate;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  template | <code>INodeTemplate</code> | Template that packages will be merged into. Is validated with \[package-json-validator\](https://www.npmjs.com/package/package-json-validator) with template.private == true overriding this. |
+|  template | <code>TTemplate</code> | Template that packages will be merged into. Is validated with \[package-json-validator\](https://www.npmjs.com/package/package-json-validator) with template.private == true overriding this. |
 |  paths | <code>string[]</code> | Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json". |
 |  saveTo | <code>string &#124; null</code> | If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required. |
 |  log | <code>LogOption</code> | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
 
 <b>Returns:</b>
 
-`{}`
+`TTemplate`
 

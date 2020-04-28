@@ -8,7 +8,7 @@ import { InvalidArgumentException } from 'node-exceptions';
 import { LogicalException } from 'node-exceptions';
 
 // @public
-export function bower(template: IBowerTemplate, paths: string[], saveTo?: string | null, log?: LogOption): {};
+export function bower<TTemplate extends IBowerTemplate>(template: TTemplate, paths: string[], saveTo?: string | null, log?: LogOption): TTemplate;
 
 // @public (undocumented)
 export interface IBowerTemplate {
@@ -70,10 +70,10 @@ export { LogicalException }
 export type LogOption = boolean | ((message?: any, ...optionalParams: any[]) => void);
 
 // @public
-export function npm(template: INodeTemplate, paths: string[], saveTo?: string | null, log?: LogOption): {};
+export function npm<TTemplate extends INodeTemplate>(template: TTemplate, paths: string[], saveTo?: string | null, log?: LogOption): TTemplate;
 
 // @public
-export function yarn(template: INodeTemplate, paths: string[], saveTo?: string | null, log?: LogOption): {};
+export function yarn<TTemplate extends INodeTemplate>(template: TTemplate, paths: string[], saveTo?: string | null, log?: LogOption): TTemplate;
 
 // @public
 export function yarnIsFlat(p?: string, log?: LogOption): boolean;
