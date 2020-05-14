@@ -1,9 +1,0 @@
-{
-    "name": "pkg1",
-    "version": "1.0.2",
-    "dependencies": {
-        "chalk": "^2.0.1",
-        "exceptions": "^0.1.1",
-        "lodash": "^4.17.4"
-    }
-}

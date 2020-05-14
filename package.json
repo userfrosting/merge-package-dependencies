@@ -49,8 +49,9 @@
         "lodash": "^4.17.15",
         "node-exceptions": "^4.0.1",
         "package-json-validator": "0.6.3",
+        "semver": "^7.3.2",
         "semver-intersect": "^1.4.0",
-        "semver": "^7.3.2"
+        "ts-log": "^2.1.4"
     },
     "devDependencies": {
         "@microsoft/api-documenter": "^7.7.19",

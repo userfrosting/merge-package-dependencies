@@ -21,23 +21,28 @@ npm i -D  @userfrosting/merge-package-dependencies
 
 ## Usage
 
-To merge multiple `package.json`'s into a single object, and save to a specified location...
+To merge multiple NPM `package.json`'s into a single object, and save to a specified location...
 
 ```js
-import * as mergePackages from "@userfrosting/merge-package-dependencies";
+import { NpmPackage } from "@userfrosting/merge-package-dependencies";
+import url from "url";
+import path from "path";
 
-let result = mergePackages.yarn(
-    {
-        name: "pkg",
-        version: "1.7.2",
-    },
-    [
-        "../app/sprinkles/core/",
-        "../app/sprinkles/account/",
-        "../app/sprinkles/admin/"
-    ],
-    "../app/assets/"
-);
+const scriptDir = path.dirname(url.fileURLToPath(import.meta.url));
+
+// Create a template
+const target = NpmPackage.fromObject({
+    name: "pkg",
+    version: "1.7.2",
+});
+
+// Merge existing package dependencies
+target.merge(NpmPackage.fromFile(path.join(scriptDir, "./packages/a/package.json")));
+target.merge(NpmPackage.fromFile(path.join(scriptDir, "./packages/b/package.json")));
+target.merge(NpmPackage.fromFile(path.join(scriptDir, "./packages/c/package.json")));
+
+// Write built-up target package to file system
+target.toFile(path.join(scriptsDir, "./package.json");
 ```
 
 ## API

@@ -1,7 +1,0 @@
-{
-    "name": "pkg7",
-    "version": "1.0.0",
-    "dependencies": {
-        "bootstrap": "https://github.com/twbs/bootstrap/archive/v4-dev.zip"
-    }
-}

@@ -1,5 +1,4 @@
 !dist/
-test-resources/
 .editorconfig
 .gitattributes
 .nyc_output/
