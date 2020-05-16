@@ -3,7 +3,6 @@
 | Branch | Status |
 | ------ | ------ |
 | master | [![Continuous Integration](https://github.com/userfrosting/merge-package-dependencies/workflows/Continuous%20Integration/badge.svg?branch=master)](https://github.com/userfrosting/merge-package-dependencies/actions?query=branch:master+workflow:"Continuous+Integration") [![codecov](https://codecov.io/gh/userfrosting/merge-package-dependencies/branch/master/graph/badge.svg)](https://codecov.io/gh/userfrosting/merge-package-dependencies/branch/master) |
-| develop | [![Continuous Integration](https://github.com/userfrosting/merge-package-dependencies/workflows/Continuous%20Integration/badge.svg?branch=develop)](https://github.com/userfrosting/merge-package-dependencies/actions?query=branch:develop+workflow:"Continuous+Integration") [![codecov](https://codecov.io/gh/userfrosting/merge-package-dependencies/branch/develop/graph/badge.svg)](https://codecov.io/gh/userfrosting/merge-package-dependencies/branch/develop) |
 
 A simple tool that can merge the `dependency` and `devDependency` dependency types for npm/yarn `package.json`s or bower `bower.json`s into a single `package.json` or `bower.json` object (and optionally file). To properly support frontend scenarios, this tool also merges `resolutions`, and ignores unnecessary field recommendations for private npm/yarn packages. Perfect for projects like UserFrosting where plugins (*Sprinkles*) provide virtually all functionality.
 
