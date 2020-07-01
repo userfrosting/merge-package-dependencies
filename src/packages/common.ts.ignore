@@ -1,34 +1,28 @@
-import { readFileSync } from "fs";
-
 let nextId = 0;
 
 export abstract class Package {
-    #id?: string;
+    /**
+     * Unique number to identify package instance.
+     */
+    readonly #id: number;
+
+    constructor() {
+        this.#id = nextId++;
+    }
 
     /**
-     * Returns a unique id for this package instance, assigned at first access time.
+     * Returns a unique id for this package instance.
      * This is intended as a fallback for logging when no other identifier exists.
      */
-    get id(): string {
-        if (!this.#id) {
-            this.#id = "FALLBACK_PKG_ID_" + nextId++;
-        }
-
+    protected get id(): number {
         return this.#id;
     }
 
-    protected readFile(path: string): Buffer {
-        return readFileSync(path);
-    }
-
     /**
-     * Merges common package dependency matrixes (`dependencies`, `devDependencies`) from the
-     * provided package into this package.
+     * Merges package dependency matrixes from the provided package into this package.
      * @param pkg Package to take dependencies from.
      */
-    merge(pkg: Package): void {
-
-    }
+    public abstract merge(pkg: this): void;
 }
 
 export interface IDependencies {

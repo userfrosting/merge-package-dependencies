@@ -19,9 +19,9 @@
     "types": "./dist/main.d.ts",
     "scripts": {
         "aeCheck": "api-extractor run",
-        "aeUpdate": "api-extractor run --local",
+        "aeUpdate": "",
         "purgeDocs": "del-cli ./docs/api/",
-        "adUpdate": "npm run purgeDocs && api-documenter markdown -i ./temp -o ./docs/api",
+        "adUpdate": "",
         "build": "is-ci && npm run build:release || npm run build:dev",
         "build:dev": "tsc && npm run aeUpdate && npm run adUpdate",
         "build:release": "tsc && npm run aeCheck",
@@ -42,13 +42,8 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "@yarnpkg/lockfile": "^1.1.0",
-        "chalk": "^4.0.0",
         "esm": "^3.2.25",
-        "fs-extra": "^9.0.0",
-        "lodash": "^4.17.15",
-        "node-exceptions": "^4.0.1",
-        "package-json-validator": "0.6.3",
+        "just-extend": "^4.1.0",
         "semver": "^7.3.2",
         "semver-intersect": "^1.4.0",
         "ts-log": "^2.1.4"
@@ -56,11 +51,7 @@
     "devDependencies": {
         "@microsoft/api-documenter": "^7.7.19",
         "@microsoft/api-extractor": "^7.7.13",
-        "@types/fs-extra": "^8.1.0",
-        "@types/lodash": "^4.14.150",
-        "@types/node": "^13.13.2",
         "@types/semver": "^7.1.0",
-        "@types/yarnpkg__lockfile": "^1.1.3",
         "ava": "^3.7.1",
         "changelog-updater": "^1.1.0",
         "del-cli": "^3.0.0",

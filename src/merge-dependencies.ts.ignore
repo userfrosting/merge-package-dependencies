@@ -1,0 +1,26 @@
+import { IDependencies } from "./packages/common";
+import extend from "just-extend";
+
+export function mergeDependencies(depsA: IDependencies, depsB: IDependencies): IDependencies {
+    const depsTarget: IDependencies = extend({}, depsA);
+
+    for (const name in depsB) {
+        if (depsB.hasOwnProperty(name)) {
+            const versionConstraint = depsB[name];
+
+            if (depsTarget.hasOwnProperty(name)) {
+                // Dependency collision, attempt to resolve
+                try {
+                    depsTarget[name] = '';// TODO
+                } catch (e) {
+                    // TODO Check error type, handle dependency version conflict resolutions, etc
+                }
+            } else {
+                // New dependency, copy over and carry on
+                depsTarget[name] = versionConstraint;
+            }
+        }
+    }
+
+    return depsTarget;
+}

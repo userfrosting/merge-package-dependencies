@@ -1,7 +1,17 @@
 import { Package, IPackageLiteral, IDependencies } from "./common.js";
+import extend from "just-extend";
 
-export abstract class NodePackage extends Package {
-    merge(pkg: NodePackage): void {
+export abstract class NodePackage<TPackageLiteral extends INodePackageLiteral> extends Package {
+    readonly #pkg: TPackageLiteral;
+
+    constructor(pkg: TPackageLiteral) {
+        super();
+
+        // Deeply clone package literal object to avoid mutation leak issues
+        this.#pkg = extend({}, pkg);
+    }
+
+    public merge(pkg: this): void {
         // todo
     }
 }
