@@ -14,6 +14,8 @@ A simple tool that can merge the `dependency` and `devDependency` dependency typ
 >
 > NOTE: Any dependencies with a path specified as the version will not be adjusted, even if an output location is specified.
 
+Would be nice to have all error messages look like https://www.npmjs.com/package/better-ajv-errors
+
 Installation
 ------------
 

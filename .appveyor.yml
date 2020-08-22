@@ -2,9 +2,10 @@
 environment:
   matrix:
     # Minimum node version
-    - nodejs_version: "6"
-    # Most common node version (for UF community)
-    - nodejs_version: "7"
+    - nodejs_version: "8"
+    # Middleground
+    - nodejs_version: "9"
+    - nodejs_version: "10"
     # Latest node version
     - nodejs_version: ""
 
