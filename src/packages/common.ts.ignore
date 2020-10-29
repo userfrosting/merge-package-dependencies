@@ -1,13 +1,20 @@
+import extend from "just-extend";
+
 let nextId = 0;
 
-export abstract class Package {
+export abstract class Package<TPackageLiteral extends IPackageLiteral> {
     /**
      * Unique number to identify package instance.
      */
     readonly #id: number;
 
-    constructor() {
+    readonly #pkg: TPackageLiteral;
+
+    constructor(pkg: TPackageLiteral) {
         this.#id = nextId++;
+
+        // Deeply clone package literal object to avoid mutation leak issues
+        this.#pkg = extend({}, pkg);
     }
 
     /**
@@ -48,4 +55,14 @@ export interface IPackageLiteral {
      * Dependencies intended to be used for development purposes such as build tools.
      */
     devDependencies?: IDependencies;
+
+    /**
+     * Dependencies the package is compatible with and may use if available.
+     */
+    peerDependencies?: IDependencies;
+
+    /**
+     * Dependencies install in all compatible environments and by packages including this package.
+     */
+    optionalDependencies?: IDependencies;
 }

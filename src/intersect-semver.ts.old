@@ -1,0 +1,121 @@
+import semver from "semver";
+import semverIntersect from "semver-intersect";
+import { Logger } from "ts-log";
+
+function isSemverString(versionConstraint: string): boolean {
+    return !!semver.valid(versionConstraint) || !!semver.validRange(versionConstraint);
+}
+
+/**
+ * Attempts to clean a semver string, removing redundant syntax and white space.
+ * @param versionConstraint
+ */
+function clean(versionConstraint: string): string {
+    let versionConstraintClean = versionConstraint;
+    try {
+        versionConstraintClean = semver.clean(versionConstraint);
+    } catch {}
+
+    if (versionConstraintClean !== null) {
+        return versionConstraintClean;
+    }
+
+    return versionConstraint.trim();
+}
+
+/**
+ * Patch for semver.eq to handle crashes.
+ * @param constraintA
+ * @param constraintB
+ */
+function tryCompare(constraintA: string, constraintB: string): boolean {
+    try {
+        return semver.eq(constraintA, constraintB);
+    } catch {
+        // TODO Why are we doing this? Need to document.
+        return constraintA === constraintB;
+    }
+}
+
+/**
+ * Clumsily combines semver ranges by joining them together. Output may contain redundant portions.
+ * @param constraintA
+ * @param constraintB
+ */
+function imperfectIntersect(constraintA: string, constraintB: string, logger: Logger): string {
+    let semverPairs = [];
+
+    for (const semverAPart of constraintA.split("||")) {
+        for (const semverBPart of constraintB.split("||")) {
+            // TODO Handle version collapsing (e.g. identical pairs, pairs with no overlap)
+            semverPairs.push(`${clean(semverAPart)} ${clean(semverBPart)}`);
+        }
+    }
+
+    return semverPairs.join(" || ");
+}
+
+class NotSemverError extends TypeError {
+    readonly unexpectedInput: string;
+
+    constructor(inputNumber: number, value: string) {
+        super(`Constraint ${inputNumber} with value ${JSON.stringify(value)} is not a semver value nor semver compliant version number.`);
+        this.unexpectedInput = value;
+    }
+}
+
+class IncompatibleRangesError extends Error {
+    readonly input1: string;
+    readonly input2: string;
+
+    constructor(input1: string, input2: string) {
+        super(`Inputs ${JSON.stringify(input1)} and ${JSON.stringify(input2)} cannot be merged as they have no overlap.`);
+        this.input1 = input1;
+        this.input2 = input2;
+    }
+}
+
+/**
+ * Intersects semver and semver-like ranges. Will throw if inputs cannot be intersected.
+ */
+export function intersect(constraintA: string, constraintB: string, logger: Logger): string {
+    if (!isSemverString(constraintA)) {
+        throw new NotSemverError(1, constraintA);
+    }
+    constraintA = clean(constraintA);
+
+    if (!isSemverString(constraintB)) {
+        throw new NotSemverError(2, constraintB);
+    }
+    constraintB = clean(constraintB);
+
+    // Both are semver, but do they overlap?
+    if (!semver.intersects(constraintA, constraintB)) {
+        throw new IncompatibleRangesError(constraintA, constraintB);
+    }
+
+    // Identical, or logically the same
+    // TODO this can fail on '1', is that to spec?
+    if (tryCompare(constraintA, constraintB)) {
+        return clean(constraintA);
+    }
+
+    // Try a concise merge with semver-intersect package
+    try {
+        return clean(semverIntersect(constraintA, constraintB));
+    } catch {
+        logger.trace("semver-intersect library failed.", { constraintA, constraintB });
+    }
+
+    // Fallback for logical-or, and logical-and in some scenarios
+    const intersection = imperfectIntersect(constraintA, constraintB, logger);
+    if (!semver.validRange(intersection)) {
+        // Well we tried
+        throw new Error(
+            `Inputs ${JSON.stringify(constraintA)} and ${JSON.stringify(constraintB)} are considered compatible but cannot be merged.`
+            + "Please report this issue."
+        );
+    }
+
+    return clean(intersection);
+}

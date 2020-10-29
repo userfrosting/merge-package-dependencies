@@ -1,0 +1,202 @@
+import test from "ava";
+import { intersect } from "./intersect-semver.js";
+import { logAdapter } from "@userfrosting/ts-log-adapter-ava";
+
+test("Identical versions", t => {
+    const logger = logAdapter(t.log);
+
+    t.is(
+        intersect("1.0.0", "1.0.0", logger),
+        "1.0.0"
+    );
+
+    // Containing blank spaces
+    t.is(
+        intersect("1.0.0 ", "1.0.0", logger),
+        "1.0.0"
+    );
+
+    // Unnecessary 'v'
+    t.is(
+        intersect("v1.0.0", "1.0.0", logger),
+        "1.0.0"
+    );
+
+    // Unnecessary '=' and 'v'
+    t.is(
+        intersect("=v1.0.0", "1.0.0", logger),
+        "1.0.0"
+    );
+
+    // Unnecessary '='
+    t.is(
+        intersect("=1.0.0", "1.0.0", logger),
+        "1.0.0"
+    );
+});
+
+test("Version pin and a range", t => {
+    const logger = logAdapter(t.log);
+
+    t.is(
+        intersect("1", "1.0.0", logger),
+        // 1 === ^1
+        // TODO Cover scenario where a version constraint is a version pin, should be 1.0.0
+        "1 1.0.0"
+    );
+});
+
+test("Identical ranges", t => {
+    const logger = logAdapter(t.log);
+
+    t.is(
+        intersect("1.0", "1.0", logger),
+        // TODO Prefer a normalized outcome of ^1.0.0
+        "1.0"
+    );
+
+    t.is(
+        intersect("1", "1", logger),
+        // TODO Prefer a normalized outcome of ^1.0.0
+        "1"
+    );
+
+    t.is(
+        intersect("2.2", "2.2", logger),
+        // TODO Prefer a normalized outcome of ^2.2.0
+        "2.2"
+    );
+
+    t.is(
+        intersect("1", "^1", logger),
+        // 1 === ^1
+        // These are functionality identical, and should collapse to ^1.0.0
+        "1 ^1"
+    );
+
+    t.is(
+        intersect("^1", ">=1 <2", logger),
+        // ^1 === >=1 <2
+        // TODO These are functionality identical, and should collapse to ^1.0.0
+        "^1 >=1 <2"
+    );
+});
+
+test("Subset ranges", t => {
+    const logger = logAdapter(t.log);
+
+    t.is(
+        intersect("1", "1.0", logger),
+        // TODO Should collapse to ~1.0.0
+        "1 1.0"
+    );
+
+    t.is(
+        intersect(">=1", "^1.0.0", logger),
+        // TODO Should collapse to ^1.0.0
+        ">=1 ^1.0.0"
+    );
+
+    t.is(
+        intersect("^1.0.0 || ^2.0.0", "^1.0.0", logger),
+        // TODO Should collapse to ^1.0.0
+        "^1.0.0"
+    );
+
+    t.is(
+        intersect("^1.0.0 || ^2.0.0", "^1.0.0 || ^2.0.0", logger),
+        "^1.0.0 || ^2.0.0"
+    );
+
+    t.is(
+        intersect("^1.0.0 || ^2.0.0", "^2.0.0 || ^3.0.0", logger),
+        // TODO Should collapse to ^2.0.0
+        "^2.0.0"
+    );
+});
+
+test.skip("Between ranges", t => {
+    const logger = logAdapter(t.log);
+
+    t.is(
+        intersect("1 - 3", "1.0.0", logger),
+        // TODO Handle this, and how does this work?
+        "1 - 3 1.0.0"
+    );
+});
+
+test("Glob star", t => {
+    const logger = logAdapter(t.log);
+
+    t.is(
+        intersect("*", "1.0.0", logger),
+        // TODO Should collapse to ^1.0.0
+        "* 1.0.0"
+    );
+
+    t.is(
+        intersect("*", "*", logger),
+        "*"
+    );
+});
+
+test("Latest keyword", t => {
+    const logger = logAdapter(t.log);
+
+    // 'latest' is incompatible with any range that has a ceiling
+    t.throws(() => {
+        intersect("latest", "1.0.0", logger)
+    });
+
+    t.is(
+        intersect("latest", "latest", logger),
+        "latest"
+    );
+
+    t.is(
+        intersect("*", "latest", logger),
+        "latest"
+    );
+});
+
+test("Git URL", t => {
+    const logger = logAdapter(t.log);
+
+    t.throws(() => {
+        intersect("git+ssh://git@github.com:npm/cli.git#v1.0.27", "1.0.0", logger);
+    });
+
+    t.throws(() => {
+        intersect("1.0.0", "git+ssh://git@github.com:npm/cli.git#v1.0.27", logger);
+    });
+});
+
+test("GitHub Repo", t => {
+    const logger = logAdapter(t.log);
+
+    t.throws(() => {
+        intersect("userfrosting/merge-package-dependencies", "1.0.0", logger)
+    });
+
+    t.throws(() => {
+        intersect("1.0.0", "userfrosting/merge-package-dependencies", logger)
+    });
+
+    t.throws(() => {
+        intersect("userfrosting/merge-package-dependencies", "userfrosting/merge-package-dependencies", logger)
+    });
+});
+
+test("Local path", t => {
+    const logger = logAdapter(t.log);
+
+    t.is(
+        intersect("file:../foo/bar", "1.0.0", logger),
+        "* 1.0"
+    );
+
+    t.is(
+        intersect("1.0.0", "file:../foo/bar", logger),
+        "* 1.0"
+    );
+});

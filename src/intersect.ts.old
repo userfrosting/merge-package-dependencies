@@ -1,0 +1,194 @@
+// Based on semver-intersect 1.4.0 by Suneil Nyamathi
+// https://github.com/snyamathi/semver-intersect
+
+import semver from "semver";
+
+const conditionRegex = /^([<=>]+)?/;
+const minMaxRegex = /^>=([\d]+\.[\d]+\.[\d]+(?:-[\w.]+)?) <=?([\d]+\.[\d]+\.[\d]+)$/;
+const versionRegex = /([\d]+\.[\d]+\.[\d]+(?:-[\w.]+)?)$/;
+const whitespaceRegex = /\s+/;
+
+/**
+ * Creates a shorthand version of a given semver range.
+ * @param range Range to process
+ */
+function createShorthand(range: string): string {
+    const match = minMaxRegex.exec(range);
+    if (!match) {
+        return range;
+    }
+
+    const [ min, max ] = match.slice(1);
+    if (min === max) {
+        // Exact range
+        return min;
+    }
+
+    // Stable range with an inclusive max version
+    if (range.includes('<=')) {
+        return `${min} - ${max}`;
+    }
+
+    // Special handling for major version 0
+    if (semver.major(min) === 0 && semver.major(max) === 0) {
+        // ^0.0.5
+        if (semver.minor(min) === 0 && semver.minor(max) === 0) {
+            return `^${min}`;
+        }
+
+        // ~0.0.5
+        if (semver.minor(min) === 0) {
+            return `~${min}`;
+        }
+
+        // ^0.5.0
+        return `^${min}`;
+    }
+
+    if (semver.major(min) !== semver.major(max)) {
+        if (semver.major(min) === 0) {
+            return '0';
+        }
+
+        return `^${min}`;
+    }
+
+    return `~${min}`;
+}
+
+/**
+ * Determines if a range is compatible with provided bounds, throwing if incompatible.
+ * @param range Range to assess
+ * @param bounds Bounds range needs to satisfy
+ */
+function ensureCompatible(range: string, ...bounds: string[]): void|never {
+    const { prerelease, version } = parseRange(range);
+
+    bounds.forEach(bound => {
+        if (!bound) {
+            return;
+        }
+
+        if (semver.satisfies(version, bound) && semver.intersects(range, bound)) {
+            return;
+        }
+
+        if (prerelease) {
+            if (parseRange(bound).prerelease) {
+                // If both bounds are pre-release versions, either can satisfy the other
+                if (semver.satisfies(parseRange(bound).version, range)) {
+                    return;
+                }
+            } else if (semver.satisfies(version, `${range} ${bound}`)) {
+                // If only our version is a pre-release version, don't fail on 1.0.0-a <2.0.0
+                return;
+            }
+        }
+
+        throw new Error(`Range ${range} is not compatible with ${bound}`);
+    });
+}
+
+/**
+ * Splits ranges by their logical-and operators.
+ * @param ranges Ranges to expand.
+ */
+function expandRanges(...ranges: string[]): string[] {
+    return ranges.reduce<string[]>((result, range) => {
+        const validRange = semver.validRange(range);
+        const validRanges = validRange.split(whitespaceRegex);
+        return union(result, validRanges);
+    }, []);
+}
+
+/**
+ * Formats an intersection.
+ */
+function formatIntersection({ lowerBound = '', upperBound = '' }) {
+    if (lowerBound === upperBound) {
+        return lowerBound;
+    }
+
+    return `${lowerBound} ${upperBound}`.trim();
+}
+
+export function intersect(...ranges: string[]): string {
+    // TODO Need to handle logical-or up front
+
+    ranges = expandRanges(...ranges);
+
+    const bounds = ranges.reduce<{ lowerBound?: string, upperBound?: string }>(({ lowerBound, upperBound }, range) => {
+        const { condition, prerelease } = parseRange(range);
+
+        if (prerelease) {
+            ensureCompatible(range, lowerBound, upperBound);
+        }
+
+        // Exact version number specified, must be compatible with both bounds
+        if (condition === '=') {
+            ensureCompatible(range, lowerBound, upperBound);
+            lowerBound = '>=' + range;
+            upperBound = '<=' + range;
+        }
+
+        // New lower bound must be less than existing upper bound
+        if (condition.startsWith('>')) {
+            ensureCompatible(range, upperBound);
+            lowerBound = mergeBounds(range, lowerBound);
+        }
+
+        // And vice versa
+        if (condition.startsWith('<')) {
+            ensureCompatible(range, lowerBound);
+            upperBound = mergeBounds(range, upperBound);
+        }
+
+        return { lowerBound, upperBound };
+    }, {});
+
+    const range = formatIntersection(bounds);
+    const shorthand = createShorthand(range);
+
+    return shorthand;
+}
+
+/**
+ * Combines a range with a bound.
+ * @param range Range to merge into
+ * @param bound Bound to merge
+ */
+function mergeBounds(range: string, bound: string): string {
+    if (!bound) {
+        return range;
+    }
+
+    const { condition, version } = parseRange(range);
+    const boundingVersion = parseRange(bound).version;
+    const comparator = condition.startsWith('<') ? semver.lt : semver.gt;
+    const strict = condition === '<' || condition === '>';
+
+    if (comparator(version, boundingVersion)) {
+        return range;
+    } else if (strict && semver.eq(version, boundingVersion)) {
+        return range;
+    } else {
+        return bound;
+    }
+}
+
+/**
+ * Parse a range for processing.
+ */
+function parseRange(range: string) {
+    const condition = conditionRegex.exec(range)[1] || '=';
+    const version = versionRegex.exec(range)[1];
+    const prerelease = semver.prerelease(version);
+    return { condition, prerelease, version };
+}
+
+/**
+ * Combines arrays without duplicates.
+ */
+function union(a: string[], b: string[]): string[] {
+    return Array.from(new Set([ ...a, ...b ]).values());
+}
