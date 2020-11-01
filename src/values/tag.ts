@@ -8,6 +8,12 @@ export class Tag extends Value {
      */
     static is(value: string) : boolean {
         const cleanValue = value.trim();
+
+        if (cleanValue === "latest") {
+            // This tag has special meaning (automatic), and is handled elsewhere
+            return false;
+        }
+
         if (cleanValue.match(/^\d/) !== null) {
             return false;
         }
@@ -16,6 +22,6 @@ export class Tag extends Value {
         }
 
         // Ensure valid characters
-        return cleanValue.match(/[a-zA-Z][a-zA-Z\.\-0-1]*/g)?.[0] === cleanValue;
+        return cleanValue.match(/[a-zA-Z][a-zA-Z\.\-0-9]*/g)?.[0] === cleanValue;
     }
 }

@@ -8,5 +8,6 @@ export class Between extends SemverRange {
      */
     static is(value: string) : boolean {
         // 1.0.0 - 3.0.0
+        return false;
     }
 }

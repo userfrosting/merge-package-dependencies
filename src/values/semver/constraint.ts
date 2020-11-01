@@ -8,5 +8,6 @@ export class Constraint extends SemverRange {
      */
     static is(value: string) : boolean {
         // ^1.2 or ~1.2 or 5.x or 1.2
+        return false;
     }
 }

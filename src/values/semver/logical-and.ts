@@ -8,5 +8,6 @@ export class LogicalAnd extends SemverRange {
      */
     static is(value: string) : boolean {
         // ^1.2 1.3.2
+        return false;
     }
 }

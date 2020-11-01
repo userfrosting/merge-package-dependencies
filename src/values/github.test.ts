@@ -10,4 +10,7 @@ test("Valid git repo references", t => {
 
 test("Invalid values", t => {
     t.is(GitHub.is("file:./foo/bar"), false);
+    t.is(GitHub.is("file:./foo"), false);
+    t.is(GitHub.is("file:./"), false);
+    t.is(GitHub.is("1.2.3"), false);
 });
