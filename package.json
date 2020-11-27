@@ -4,10 +4,7 @@
     "description": "Merge npm, Yarn, pnpm, etc package dependencies into one package, with semver rules respected.",
     "funding": "https://opencollective.com/userfrosting",
     "type": "module",
-    "exports": {
-        "require": "./dist/index.js",
-        "import": "./dist/main.js"
-    },
+    "exports": "./dist/main.js",
     "types": "./dist/main.d.ts",
     "repository": {
         "type": "git",
@@ -47,16 +44,16 @@
         "ts-log": "^2.2.3"
     },
     "devDependencies": {
-        "@microsoft/api-documenter": "^7.9.20",
-        "@microsoft/api-extractor": "^7.11.0",
+        "@microsoft/api-documenter": "^7.11.0",
+        "@microsoft/api-extractor": "^7.12.0",
         "@types/semver": "^7.3.4",
         "@userfrosting/ts-log-adapter-ava": "^0.1.0",
         "ava": "^3.13.0",
         "c8": "^7.3.5",
-        "changelog-updater": "^1.1.0",
+        "changelog-updater": "^2.0.2",
         "del-cli": "^3.0.1",
         "is-ci": "^2.0.0",
-        "typescript": "^4.0.5"
+        "typescript": "^4.1.2"
     },
     "engines": {
         "node": ">=12.17.0"

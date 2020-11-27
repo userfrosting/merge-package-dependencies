@@ -3,8 +3,9 @@
 | Branch | Status |
 | ------ | ------ |
 | master | [![Continuous Integration](https://github.com/userfrosting/merge-package-dependencies/workflows/Continuous%20Integration/badge.svg?branch=master)](https://github.com/userfrosting/merge-package-dependencies/actions?query=branch:master+workflow:"Continuous+Integration") [![codecov](https://codecov.io/gh/userfrosting/merge-package-dependencies/branch/master/graph/badge.svg)](https://codecov.io/gh/userfrosting/merge-package-dependencies/branch/master) |
+| develop-stash | [![Continuous Integration](https://github.com/userfrosting/merge-package-dependencies/workflows/Continuous%20Integration/badge.svg?branch=develop-stash)](https://github.com/userfrosting/merge-package-dependencies/actions?query=branch:develop-stash+workflow:"Continuous+Integration") [![codecov](https://codecov.io/gh/userfrosting/merge-package-dependencies/branch/develop-stash/graph/badge.svg)](https://codecov.io/gh/userfrosting/merge-package-dependencies/branch/develop-stash) |
 
-> This is an ES Module package which includes a CommonJS entrypoint for convenience. NodeJS 12.17 or greater is required.
+> This is an ES Modules package. Minimum NodeJS version is 12.17, 12.20 or greater is recommended.
 
 > This branch is under active development.
 
@@ -24,8 +25,6 @@ To merge multiple NPM `package.json`'s into a single object, and save to a speci
 
 ```js
 import { NpmPackage } from "@userfrosting/merge-package-dependencies";
-import url from "url";
-import path from "path";
 
 const targetPkg = new NpmPackage({
     name: "foo-bar",
