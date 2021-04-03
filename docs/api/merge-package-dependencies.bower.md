@@ -16,12 +16,12 @@ export declare function bower<TTemplate extends IBowerTemplate>(template: TTempl
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  template | <code>TTemplate</code> | Template that packages will be merged into. Is validated with \[bower-json\](https://www.npmjs.com/package/bower-json). |
-|  paths | <code>string[]</code> | Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json". |
-|  saveTo | <code>string &#124; null</code> | If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required. |
-|  log | <code>LogOption</code> | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
+|  template | TTemplate | Template that packages will be merged into. Is validated with \[bower-json\](https://www.npmjs.com/package/bower-json). |
+|  paths | string\[\] | Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json". |
+|  saveTo | string \| null | If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required. |
+|  log | [LogOption](./merge-package-dependencies.logoption.md) | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
 
 <b>Returns:</b>
 
-`TTemplate`
+TTemplate
 

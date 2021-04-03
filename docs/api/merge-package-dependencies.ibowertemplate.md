@@ -15,8 +15,8 @@ export interface IBowerTemplate
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [dependencies](./merge-package-dependencies.ibowertemplate.dependencies.md) | <code>{</code><br/><code>        [x: string]: string;</code><br/><code>    }</code> |  |
-|  [devDependencies](./merge-package-dependencies.ibowertemplate.devdependencies.md) | <code>{</code><br/><code>        [x: string]: string;</code><br/><code>    }</code> |  |
-|  [name](./merge-package-dependencies.ibowertemplate.name.md) | <code>string</code> |  |
-|  [resolutions](./merge-package-dependencies.ibowertemplate.resolutions.md) | <code>{</code><br/><code>        [x: string]: string;</code><br/><code>    }</code> |  |
+|  [dependencies?](./merge-package-dependencies.ibowertemplate.dependencies.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
+|  [devDependencies?](./merge-package-dependencies.ibowertemplate.devdependencies.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
+|  [name](./merge-package-dependencies.ibowertemplate.name.md) | string |  |
+|  [resolutions?](./merge-package-dependencies.ibowertemplate.resolutions.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
 

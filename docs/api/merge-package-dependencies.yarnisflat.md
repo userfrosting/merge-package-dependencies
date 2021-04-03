@@ -16,10 +16,10 @@ export declare function yarnIsFlat(p?: string, log?: LogOption): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  p | <code>string</code> | Directory of <code>yarn.lock</code>. |
-|  log | <code>LogOption</code> | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
+|  p | string | Directory of <code>yarn.lock</code>. |
+|  log | [LogOption](./merge-package-dependencies.logoption.md) | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
 
 <b>Returns:</b>
 
-`boolean`
+boolean
 

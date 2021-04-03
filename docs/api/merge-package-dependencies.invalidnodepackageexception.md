@@ -10,3 +10,5 @@
 ```typescript
 export declare class InvalidNodePackageException extends LogicalException 
 ```
+<b>Extends:</b> LogicalException
+

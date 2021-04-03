@@ -15,11 +15,11 @@ export interface INodeTemplate
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [dependencies](./merge-package-dependencies.inodetemplate.dependencies.md) | <code>{</code><br/><code>        [x: string]: string;</code><br/><code>    }</code> |  |
-|  [devDependencies](./merge-package-dependencies.inodetemplate.devdependencies.md) | <code>{</code><br/><code>        [x: string]: string;</code><br/><code>    }</code> |  |
-|  [name](./merge-package-dependencies.inodetemplate.name.md) | <code>string</code> |  |
-|  [peerDependencies](./merge-package-dependencies.inodetemplate.peerdependencies.md) | <code>{</code><br/><code>        [x: string]: string;</code><br/><code>    }</code> |  |
-|  [private](./merge-package-dependencies.inodetemplate.private.md) | <code>boolean</code> |  |
-|  [resolutions](./merge-package-dependencies.inodetemplate.resolutions.md) | <code>{</code><br/><code>        [x: string]: string;</code><br/><code>    }</code> |  |
-|  [version](./merge-package-dependencies.inodetemplate.version.md) | <code>string</code> |  |
+|  [dependencies?](./merge-package-dependencies.inodetemplate.dependencies.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
+|  [devDependencies?](./merge-package-dependencies.inodetemplate.devdependencies.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
+|  [name?](./merge-package-dependencies.inodetemplate.name.md) | string | <i>(Optional)</i> |
+|  [peerDependencies?](./merge-package-dependencies.inodetemplate.peerdependencies.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
+|  [private?](./merge-package-dependencies.inodetemplate.private.md) | boolean | <i>(Optional)</i> |
+|  [resolutions?](./merge-package-dependencies.inodetemplate.resolutions.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
+|  [version?](./merge-package-dependencies.inodetemplate.version.md) | string | <i>(Optional)</i> |
 

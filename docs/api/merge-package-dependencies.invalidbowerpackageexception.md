@@ -10,3 +10,5 @@
 ```typescript
 export declare class InvalidBowerPackageException extends LogicalException 
 ```
+<b>Extends:</b> LogicalException
+
