@@ -9,7 +9,7 @@
         "allowSyntheticDefaultImports": true,
         "noEmitHelpers": true,
         "declaration": true,
-        "target": "es2020",
+        "target": "es2017",
         "outDir": "./dist/",
         "sourceMap": true,
         "strict": false,
