@@ -6,7 +6,9 @@
         "lockfiles",
         "Mele",
         "Meul",
-        "ssnukala"
+        "ssnukala",
+        "Lando",
+        "PNPM"
     ],
     "ignoreWords": [
         "amdefine",
@@ -31,11 +33,13 @@
         "urijs",
         "userfrosting",
         "wordwrap",
-        "yarnpkg"
+        "yarnpkg",
+        "lcovonly"
     ],
     "ignorePaths": [
         "cspell.json",
         "package-lock.json",
+        "pnpm-lock.yaml",
         "api-extractor.json",
         "docs/api/",
         "dist/",

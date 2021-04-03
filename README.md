@@ -20,6 +20,10 @@ npm i -D  @userfrosting/merge-package-dependencies
 
 ## Usage
 
+> **IMPORTANT**<br/>
+> This is an ES module package targeting NodeJS `^12.17.0 || >=13.2.0`, refer to the [NodeJS ESM docs](https://nodejs.org/api/esm.html) regarding how to correctly import.
+> ESM loaders like `@babel/loader` or `esm` likely won't work as expected.
+
 To merge multiple `package.json`'s into a single object, and save to a specified location...
 
 ```js
@@ -41,19 +45,12 @@ let result = mergePackages.yarn(
 
 ## API
 
-API documentation is regenerated for every release using [API Extractor](https://www.npmjs.com/package/@microsoft/api-extractor) and [API Documenter](https://www.npmjs.com/package/@microsoft/api-documenter).
-The results reside in [docs/api](./docs/api/index.md).
-
-## Release process
-
-Generally speaking, all releases should first traverse through `alpha`, `beta`, and `rc` (release candidate) to catch missed bugs and gather feedback as appropriate. Aside from this however, there are a few steps that **MUST** always be done.
-
-1. Make sure [`CHANGELOG.md`](./CHANGELOG.md) is up to date.
-2. Update version via `npm` like `npm version 3.0.0` or `npm version patch`.
-3. `npm publish`.
-4. Create release on GitHub from tag made by `npm version`.
+See [docs/api](./docs/api/index.md).
 
 ## License
 
 [MIT](LICENSE)
 
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md).

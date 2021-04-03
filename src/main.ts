@@ -5,7 +5,7 @@ import fs from "fs-extra";
 import path from "path";
 import _ from "lodash";
 import chalk from "chalk";
-import * as yarnLockParser from "@yarnpkg/lockfile";
+import yarnLockParser from "@yarnpkg/lockfile";
 import * as Exceptions from "./exceptions.js";
 
 export {

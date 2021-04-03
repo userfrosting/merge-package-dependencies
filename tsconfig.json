@@ -1,7 +1,7 @@
 {
     "$schema": "http://json.schemastore.org/tsconfig",
     "compilerOptions": {
-        "module": "esnext",
+        "module": "es2020",
         "moduleResolution": "node",
         "lib": [
             "es2015"
@@ -9,10 +9,15 @@
         "allowSyntheticDefaultImports": true,
         "noEmitHelpers": true,
         "declaration": true,
-        "target": "es2017",
+        "target": "es2020",
         "outDir": "./dist/",
         "sourceMap": true,
-        // TODO: Enable strict mode
-        "strict": false
+        "strict": false,
+        "forceConsistentCasingInFileNames": true,
+
+        // TODO Remove once self-referencing supported https://github.com/microsoft/TypeScript/issues/38675
+        "paths": {
+            "@userfrosting/merge-package-dependencies": [ "./src/main" ]
+        }
     }
 }

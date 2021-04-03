@@ -3,12 +3,9 @@
     "version": "2.1.0",
     "description": "Merge NPM, Yarn or Bower package dependencies into one package, with semver rules respected.",
     "funding": "https://opencollective.com/userfrosting",
-    "type": "commonjs",
-    "main": "./dist/index.js",
-    "exports": {
-        "require": "./dist/index.js",
-        "import": "./dist/main.js"
-    },
+    "type": "module",
+    "exports": "./dist/main.js",
+    "types": "./dist/main.d.ts",
     "repository": {
         "type": "git",
         "url": "https://github.com/userfrosting/merge-package-dependencies"
@@ -16,20 +13,20 @@
     "bugs": {
         "url": "https://github.com/userfrosting/merge-package-dependencies/issues"
     },
-    "types": "./dist/main.d.ts",
     "scripts": {
-        "aeCheck": "api-extractor run",
-        "aeUpdate": "api-extractor run --local",
-        "purgeDocs": "del-cli ./docs/api/",
-        "adUpdate": "npm run purgeDocs && api-documenter markdown -i ./temp -o ./docs/api",
-        "build": "is-ci && npm run build:release || npm run build:dev",
-        "build:dev": "tsc && npm run aeUpdate && npm run adUpdate",
-        "build:release": "tsc && npm run aeCheck",
-        "pretest": "npm run build",
-        "test": "is-ci && ava || nyc --reporter=text ava",
-        "prepublishOnly": "npm run build:release && ava",
-        "version": "changelog-updater && git add CHANGELOG.md",
-        "postversion": "git push && git push --tags"
+        "compile": "rm -rf ./dist && tsc",
+        "pretest": "npm run compile && api-extractor run --local",
+        "test": "c8 --all --reporter=text --reporter=lcovonly ava",
+        "prepublishOnly": "npm run compile",
+        "preversion": "npm test",
+        "version": "npm run version:apiDocRefresh && npm run version:changelogBump",
+        "postversion": "git push && git push --tags",
+        "version:changelogBump": "changelog-updater && git add CHANGELOG.md",
+        "version:apiDocRefresh": "api-extractor run && api-documenter markdown -i ./temp -o ./docs/api && git add ./docs/api/*",
+        "prepare": "is-npm || npm i --package-lock-only",
+        "release-readiness": "npm run release-readiness:cspell && npm run release-readiness:api-changes",
+        "release-readiness:cspell": "cspell 'src/**' 'dist/**' 'docs/**' '*'",
+        "release-readiness:api-changes": "npm run compile && api-extractor run"
     },
     "author": "Jordan Mele <SiliconSoldier@outlook.com.au> (https://djmm.me/)",
     "keywords": [
@@ -43,39 +40,35 @@
     "license": "MIT",
     "dependencies": {
         "@yarnpkg/lockfile": "^1.1.0",
-        "chalk": "^4.0.0",
-        "esm": "^3.2.25",
-        "fs-extra": "^9.0.0",
-        "lodash": "^4.17.15",
+        "chalk": "^4.1.0",
+        "fs-extra": "^9.1.0",
+        "lodash": "^4.17.21",
         "node-exceptions": "^4.0.1",
         "package-json-validator": "0.6.3",
         "semver-intersect": "^1.4.0",
-        "semver": "^7.3.2"
+        "semver": "^7.3.5"
     },
     "devDependencies": {
-        "@microsoft/api-documenter": "^7.7.19",
-        "@microsoft/api-extractor": "^7.7.13",
+        "@microsoft/api-documenter": "^7.12.7",
+        "@microsoft/api-extractor": "^7.13.1",
         "@types/fs-extra": "^9.0.0",
         "@types/lodash": "^4.14.150",
-        "@types/node": "^14.0.1",
+        "@types/node": "^14.14.25",
         "@types/semver": "^7.1.0",
         "@types/yarnpkg__lockfile": "^1.1.3",
-        "ava": "^3.7.1",
+        "ava": "^3.15.0",
+        "c8": "^7.5.0",
         "changelog-updater": "^2.0.2",
-        "del-cli": "^3.0.0",
-        "is-ci": "^2.0.0",
-        "nyc": "^15.0.1",
-        "typescript": "^4.0.2"
+        "cspell": "^5.3.7",
+        "is-npm-cli": "^1.0.0",
+        "typescript": "^4.1.3"
     },
     "engines": {
-        "node": ">=10.0.0"
+        "node": ">=12.17.0"
     },
     "ava": {
         "files": [
             "dist/**/*.test.js"
-        ],
-        "require": [
-            "esm"
         ]
     }
 }

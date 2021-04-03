@@ -1,0 +1,15 @@
+
+name: uf-gulp-bundle-assets
+services:
+  apphost:
+    type: node:14
+    globals:
+      pnpm: ^5.18.5
+
+tooling:
+  npm:
+    service: apphost
+    cmd: npm
+  pnpm:
+    service: apphost
+    cmd: pnpm
