@@ -15,9 +15,9 @@
     },
     "scripts": {
         "aeCheck": "api-extractor run",
-        "aeUpdate": "",
+        "aeUpdate": "api-extractor run --local",
         "purgeDocs": "del-cli ./docs/api/",
-        "adUpdate": "",
+        "adUpdate": "del-cli ./docs/api/ && api-documenter markdown -i ./temp -o ./docs/api",
         "build": "is-ci && npm run build:release || npm run build:dev",
         "build:dev": "tsc && npm run aeUpdate && npm run adUpdate",
         "build:release": "tsc && npm run aeCheck",

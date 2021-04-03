@@ -8,6 +8,7 @@ export class LogicalOr extends SemverRange {
      */
     static is(value: string) : boolean {
         // 1.2 || 1.3
-        return false;
+        // todo this is wrong, logical or must be first item
+        return value.search(/\|\|/g) !== -1;
     }
 }

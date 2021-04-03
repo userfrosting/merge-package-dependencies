@@ -1,4 +1,4 @@
-import * as SemVer from "semver";
+import SemVer from "semver";
 import { Constraint } from "./constraint.js";
 
 export class Pin extends Constraint {

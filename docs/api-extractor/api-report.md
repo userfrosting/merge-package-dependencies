@@ -4,81 +4,8 @@
 
 ```ts
 
-import { InvalidArgumentException } from 'node-exceptions';
-import { LogicalException } from 'node-exceptions';
-
 // @public
-export function bower<TTemplate extends IBowerTemplate>(template: TTemplate, paths: string[], saveTo?: string | null, log?: LogOption): TTemplate;
+export const foo = "bar";
 
-// @public (undocumented)
-export interface IBowerTemplate {
-    // (undocumented)
-    dependencies?: {
-        [x: string]: string;
-    };
-    // (undocumented)
-    devDependencies?: {
-        [x: string]: string;
-    };
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    resolutions?: {
-        [x: string]: string;
-    };
-}
-
-// @public (undocumented)
-export interface INodeTemplate {
-    // (undocumented)
-    dependencies?: {
-        [x: string]: string;
-    };
-    // (undocumented)
-    devDependencies?: {
-        [x: string]: string;
-    };
-    // (undocumented)
-    name?: string;
-    // (undocumented)
-    peerDependencies?: {
-        [x: string]: string;
-    };
-    // (undocumented)
-    private?: boolean;
-    // (undocumented)
-    resolutions?: {
-        [x: string]: string;
-    };
-    // (undocumented)
-    version?: string;
-}
-
-export { InvalidArgumentException }
-
-// @public (undocumented)
-export class InvalidBowerPackageException extends LogicalException {
-}
-
-// @public (undocumented)
-export class InvalidNodePackageException extends LogicalException {
-}
-
-export { LogicalException }
-
-// @public (undocumented)
-export type LogOption = boolean | ((message?: any, ...optionalParams: any[]) => void);
-
-// @public
-export function npm<TTemplate extends INodeTemplate>(template: TTemplate, paths: string[], saveTo?: string | null, log?: LogOption): TTemplate;
-
-// @public
-export function yarn<TTemplate extends INodeTemplate>(template: TTemplate, paths: string[], saveTo?: string | null, log?: LogOption): TTemplate;
-
-// @public
-export function yarnIsFlat(p?: string, log?: LogOption): boolean;
-
-
-// (No @packageDocumentation comment for this package)
 
 ```

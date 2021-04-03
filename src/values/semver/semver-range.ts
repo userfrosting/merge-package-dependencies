@@ -8,6 +8,12 @@ export class SemverRange extends Value {
      * @param value Value to check.
      */
     static is(value: string) : boolean {
+        // todo Not sure this is correct...
         return SemVer.validRange(value) !== null;
     }
+
+    // todo normalise semver string
+    // trim
+    // trim internally
+    // collapse meaningless white space
 }
