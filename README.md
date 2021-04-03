@@ -21,7 +21,7 @@ npm i -D  @userfrosting/merge-package-dependencies
 ## Usage
 
 > **IMPORTANT**<br/>
-> This is an ES module package targeting NodeJS `^12.17.0 || >=13.2.0`, refer to the [NodeJS ESM docs](https://nodejs.org/api/esm.html) regarding how to correctly import.
+> This is an ES module package targeting NodeJS `^12.17.0 || >=14.0.0`, refer to the [NodeJS ESM docs](https://nodejs.org/api/esm.html) regarding how to correctly import.
 > ESM loaders like `@babel/loader` or `esm` likely won't work as expected.
 
 To merge multiple `package.json`'s into a single object, and save to a specified location...
