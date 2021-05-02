@@ -45,6 +45,7 @@ jobs:
         version: ^6.2.3
         run_install: |
           - args: [--ignore-scripts]
+    - run: pnpm run compile
     - run: pnpm test
 
   release-readiness:
