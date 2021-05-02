@@ -18,7 +18,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
+    - run: npm ci --ignore-scripts
     - run: ./node_modules/.bin/c8 --reporter=lcovonly npm test
     - uses: codecov/codecov-action@v1
       with:

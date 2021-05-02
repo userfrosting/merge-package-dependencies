@@ -1,0 +1,25 @@
+name: Dependabot Auto
+on: [push, pull_request]
+
+jobs:
+  approve:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Assess changes
+      uses: tony84727/changed-file-filter@v0.1.0
+      id: filter
+      with:
+        filters: |
+          requirementsChanged:
+            - 'package.json'
+    - name: Merge lockfile changes
+      uses: fastify/github-action-merge-dependabot@v2.0.0
+      if: steps.filter.outputs.requirementsChanged == 'false'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Approve requirement changes
+      uses: fastify/github-action-merge-dependabot@v2.0.0
+      if: steps.filter.outputs.requirementsChanged == 'true'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        approve-only: true
