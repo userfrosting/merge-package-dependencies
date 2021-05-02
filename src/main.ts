@@ -1,9 +1,8 @@
 import semver from "semver";
 import { intersect as semverIntersect } from "semver-intersect";
 import { PJV, INpmValidateResult } from "package-json-validator";
-import fs from "fs-extra";
+import fs from "fs";
 import path from "path";
-import _ from "lodash";
 import chalk from "chalk";
 import yarnLockParser from "@yarnpkg/lockfile";
 import * as Exceptions from "./exceptions.js";
@@ -211,7 +210,7 @@ function packageJsonMerge<TTemplate extends INodeTemplate>(template: TTemplate, 
     // If template.private == true, we only inspect touched fields.
     npmValidate(template, packageSpec, log);
     // paths
-    if (!_.isArray(paths)) {
+    if (!Array.isArray(paths)) {
         throw new Exceptions.InvalidArgumentException("'paths' must be an array.");
     }
     paths.forEach(function(p, index, array) {// Resolve to complete path now.
@@ -221,7 +220,7 @@ function packageJsonMerge<TTemplate extends INodeTemplate>(template: TTemplate, 
         }
     });
     //saveTo
-    if (_.isString(saveTo)) {// Resolve to complete path now.
+    if (typeof saveTo === 'string') {// Resolve to complete path now.
         if (saveTo.match(/\\$|\/$/)) {
             saveTo += "package.json";
         }
@@ -241,13 +240,13 @@ function packageJsonMerge<TTemplate extends INodeTemplate>(template: TTemplate, 
     // Grab required dependency types, and add if not yet existing on the template.
     let depTypes = [];
     if (packageSpec == "npm") {
-        depTypes = _.cloneDeep(npmDependencyTypes);
+        depTypes = [...npmDependencyTypes];
     }
     else if (packageSpec == "yarn") {
-        depTypes = _.cloneDeep(yarnDependencyTypes);
+        depTypes = [...yarnDependencyTypes];
     }
     for (let depType of depTypes) {
-        if (_.isUndefined(template[depType])) {
+        if (!template[depType]) {
             template[depType] = {};
         }
     }
@@ -294,12 +293,10 @@ function npmValidate(pkg: INodeTemplate, pkgSpec: string, log: LogOption): void 
             depTypes = yarnDependencyTypes;
         }
         for (let depType of depTypes) {
-            if (!_.isUndefined(pkg[depType])) {
-                if (!_.isObject(pkg[depType])) {
-                    if (!_.isUndefined(results.errors)) results.errors = [];
-                    results.valid = false;
-                    results.errors.push(`"${depType}" must be an object.`);
-                }
+            if (pkg[depType] && typeof pkg[depType] !== 'object') {
+                if (!results.errors) results.errors = [];
+                results.valid = false;
+                results.errors.push(`"${depType}" must be an object.`);
             }
         }
     }
@@ -391,7 +388,7 @@ function bowerMerge<TTemplate extends IBowerTemplate>(template: TTemplate, paths
     log("Inspecting template package...")
     bowerValidate(JSON.stringify(template));// Throws an exception on failure, so no need for error reporting.
     // paths
-    if (!_.isArray(paths)) {
+    if (!Array.isArray(paths)) {
         throw new Exceptions.InvalidArgumentException("'paths' must be an array.");
     }
     paths.forEach(function(p, index, array) {// Resolve to complete path now.
@@ -401,7 +398,7 @@ function bowerMerge<TTemplate extends IBowerTemplate>(template: TTemplate, paths
         }
     });
     //saveTo
-    if (_.isString(saveTo)) {// Resolve to complete path now.
+    if (typeof saveTo === 'string') {// Resolve to complete path now.
         if (saveTo.match(/\\$|\/$/)) {
             saveTo += "bower.json";
         }
@@ -419,9 +416,9 @@ function bowerMerge<TTemplate extends IBowerTemplate>(template: TTemplate, paths
     }
 
     // Add dependency keys if not yet existing.
-    let depTypes = _.cloneDeep(bowerDependencyTypes);
+    let depTypes = [...bowerDependencyTypes];
     for (let dependencyType of depTypes) {
-        if (_.isUndefined(template[dependencyType])) {
+        if (!template[dependencyType]) {
             template[dependencyType] = {};
         }
     }
@@ -451,22 +448,21 @@ function bowerMerge<TTemplate extends IBowerTemplate>(template: TTemplate, paths
  */
 function bowerValidate(pkgJson: string): void {
     const pkg = JSON.parse(pkgJson);
-    if (!_.isObject(pkg)) {
+    if (typeof pkg !== 'object') {
         throw new Exceptions.InvalidBowerPackageException("Root of package MUST be an object.");
     }
-    // @ts-ignore
-    if (!_.isString(pkg.name)) {
+    if (typeof pkg.name !== 'string') {
         throw new Exceptions.InvalidBowerPackageException("Package name MUST be a string.");
     }
     // Now we'll give the used dependency properties a check.
     for (let dependencyType of bowerDependencyTypes) {
         if (pkg.hasOwnProperty(dependencyType)) {
-            if (!_.isObject(pkg[dependencyType])) {
+            if (typeof pkg[dependencyType] !== 'object') {
                 throw new Exceptions.InvalidBowerPackageException(`Package's '${dependencyType}' property MUST be an object.`)
             }
             else {
                 for (let pkgDep in pkg[dependencyType]) {
-                    if (!_.isString(pkg[dependencyType][pkgDep])) {
+                    if (typeof pkg[dependencyType][pkgDep] !== 'string') {
                         throw new Exceptions.InvalidBowerPackageException(`Invalid value for ${dependencyType}->${pkgDep} in package.`);
                     }
                 }
@@ -476,14 +472,13 @@ function bowerValidate(pkgJson: string): void {
     // And make sure resolutions match the expected form.
     if ("resolutions" in pkg) {
         // @ts-ignore
-        if (!_.isObject(pkg.resolutions)) {
+        if (typeof pkg.resolutions !== "object") {
             throw new Exceptions.InvalidBowerPackageException(`Package's 'resolutions' property MUST be an object.`)
         }
         else {
             // @ts-ignore
             for (let pkgRes in pkg.resolutions) {
-                // @ts-ignore
-                if (!_.isString(pkg.resolutions[pkgRes])) {
+                if (typeof pkg.resolutions[pkgRes] !== 'string') {
                     throw new Exceptions.InvalidBowerPackageException(`Invalid value for resolutions->${pkgRes} in package.`);
                 }
             }
@@ -509,11 +504,11 @@ function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate
     }
 
     // Add resolutions first in case they resolve a dependency collision that cannot be merged.
-    if (_.indexOf(depTypes, 'resolutions') !== -1) {
+    if (depTypes.indexOf('resolutions') !== -1) {
         log("Starting dependency resolution merge.");
         // Merge resolutions for each package.
         for (let pkg of pkgs) {
-            if (!_.isUndefined(pkg.resolutions)) {
+            if (pkg.resolutions) {
                 log(`Starting merge of dependency resolutions from package '${pkg.name ?? pkg.path}'`);
                 for (let dependency in pkg.resolutions) {
                      // Handle dependency resolution
@@ -531,7 +526,7 @@ function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate
         }
 
         // Remove 'resolutions' from depTypes.
-        _.pull(depTypes, 'resolutions');
+        depTypes = depTypes.filter(depType => depType !== "resolutions");
 
         log("Finished dependency resolution merge.");
     }
@@ -555,7 +550,7 @@ function mergePackageDependencies<TTemplate extends INodeTemplate|IBowerTemplate
                         }
                         catch (e) {
                             // Dependency collision failed, do we have resolutions and if so, is this collision resolved by it?
-                            if (!_.isUndefined(tml.resolutions) && !_.isUndefined(tml.resolutions[dependency])) {
+                            if (tml.resolutions?.[dependency]) {
                                 // It is!
                                 log(chalk.bgGreen("Dependency conflict detected, resolved by resolution."));
                                 tml[dependencyType][dependency] = tml.resolutions[dependency];
@@ -607,8 +602,8 @@ function handleDependencyCollision(currentVersion: string, incomingVersion: stri
                     catch (e) {
                         // If that fails, look for logical-or. If found, perform elaborate merge.
                         try {
-                            let elaborateMerge = (semverRangeWithOr, semverRange) => {
-                                let ranges = _.split(semverRangeWithOr, "||");
+                            let elaborateMerge = (semverRangeWithOr: string, semverRange: string) => {
+                                let ranges = semverRangeWithOr.split("||");
                                 let output = "";
                                 for (let i = 0; i < ranges.length; i++) {
                                     // Create new range (hopefully with semverIntersect)
@@ -635,7 +630,7 @@ function handleDependencyCollision(currentVersion: string, incomingVersion: stri
                             if (currentVersion.includes("||")) {
                                 // Just in case both have a logical-or. (but who would be THAT cruel to a package manager)
                                 if (incomingVersion.includes("||")) {
-                                    let ranges = _.split(currentVersion, "||");
+                                    let ranges = currentVersion.split("||");
                                     let result = "";
                                     for (let range of ranges) {
                                         result += elaborateMerge(incomingVersion, range);

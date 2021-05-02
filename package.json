@@ -23,7 +23,6 @@
         "postversion": "git push && git push --tags",
         "version:changelogBump": "changelog-updater && git add CHANGELOG.md",
         "version:apiDocRefresh": "api-extractor run && api-documenter markdown -i ./temp -o ./docs/api && git add ./docs/api/*",
-        "prepare": "is-npm || npm i --package-lock-only",
         "release-readiness": "npm run release-readiness:cspell && npm run release-readiness:api-changes",
         "release-readiness:cspell": "cspell 'src/**' 'dist/**' 'docs/**' '*'",
         "release-readiness:api-changes": "npm run compile && api-extractor run"
@@ -40,28 +39,23 @@
     "license": "MIT",
     "dependencies": {
         "@yarnpkg/lockfile": "^1.1.0",
-        "chalk": "^4.1.0",
-        "fs-extra": "^9.1.0",
-        "lodash": "^4.17.21",
+        "chalk": "^4.1.1",
         "node-exceptions": "^4.0.1",
         "package-json-validator": "0.6.3",
-        "semver-intersect": "^1.4.0",
-        "semver": "^7.3.5"
+        "semver": "^7.3.5",
+        "semver-intersect": "^1.4.0"
     },
     "devDependencies": {
-        "@microsoft/api-documenter": "^7.12.7",
-        "@microsoft/api-extractor": "^7.13.1",
-        "@types/fs-extra": "^9.0.0",
-        "@types/lodash": "^4.14.150",
+        "@microsoft/api-documenter": "^7.13.5",
+        "@microsoft/api-extractor": "^7.15.0",
         "@types/node": "^15.0.1",
-        "@types/semver": "^7.1.0",
-        "@types/yarnpkg__lockfile": "^1.1.3",
+        "@types/semver": "^7.3.5",
+        "@types/yarnpkg__lockfile": "^1.1.4",
         "ava": "^3.15.0",
-        "c8": "^7.5.0",
+        "c8": "^7.7.1",
         "changelog-updater": "^2.0.2",
-        "cspell": "^5.3.7",
-        "is-npm-cli": "^1.0.0",
-        "typescript": "^4.1.3"
+        "cspell": "^5.3.12",
+        "typescript": "^4.2.4"
     },
     "engines": {
         "node": "^12.17.0 || >=14.0.0"
