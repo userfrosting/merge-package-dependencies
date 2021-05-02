@@ -2,7 +2,7 @@ name: Dependabot Auto
 on: [push, pull_request]
 
 jobs:
-  approve:
+  approveOrMerge:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
