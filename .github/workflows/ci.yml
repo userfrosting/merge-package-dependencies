@@ -25,6 +25,28 @@ jobs:
     - uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_UPLOAD_TOKEN }}
+
+  pnpm-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ^14.0.0
+    - uses: actions/cache@v2
+      env:
+        cache-name: cache-pnpm-modules
+      with:
+        path: ~/.pnpm-store
+        key: pnpm-check-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
+        restore-keys: pnpm-check-${{ env.cache-name }}-
+    - uses: pnpm/action-setup@v2.0.1
+      with:
+        version: ^6.2.3
+        run_install: |
+          - args: [--ignore-scripts]
+    - run: pnpm test
+
   release-readiness:
     runs-on: ubuntu-latest
     steps:
