@@ -1,19 +1,11 @@
 version: 2
 updates:
 - package-ecosystem: npm
-  directory: "/"
+  directory: /
   schedule:
-    interval: daily
-  open-pull-requests-limit: 10
-  target-branch: master
+    interval: weekly
   versioning-strategy: increase-if-necessary
-  ignore:
-  - dependency-name: "@types/node"
-    versions:
-    - 15.0.0
-  - dependency-name: "@microsoft/api-documenter"
-    versions:
-    - 7.13.1
-  - dependency-name: is-ci
-    versions:
-    - 3.0.0
+- package-ecosystem: github-actions
+  directory: /
+  schedule:
+    interval: weekly
