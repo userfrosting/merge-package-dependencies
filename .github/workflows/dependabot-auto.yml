@@ -5,6 +5,7 @@ jobs:
   approve:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: Assess changes
       uses: tony84727/changed-file-filter@v0.1.0
       id: filter
