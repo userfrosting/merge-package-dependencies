@@ -4,9 +4,6 @@ on:
   push:
   # Pull request
   pull_request:
-  schedule:
-    # Every Monday and Thursday at 12PM UTC
-    - cron: '0 12 * * 1,4'
 
 jobs:
   test:
