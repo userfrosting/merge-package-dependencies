@@ -14,7 +14,7 @@
         "url": "https://github.com/userfrosting/merge-package-dependencies/issues"
     },
     "scripts": {
-        "compile": "rm -rf ./dist && tsc",
+        "compile": "del-cli ./dist && tsc",
         "pretest": "npm run compile && api-extractor run --local",
         "test": "c8 --all --reporter=text --reporter=lcovonly ava",
         "prepublishOnly": "npm run compile",
@@ -55,6 +55,7 @@
         "c8": "^7.7.1",
         "changelog-updater": "^2.0.2",
         "cspell": "^5.3.12",
+        "del-cli": "^4.0.0",
         "typescript": "^4.2.4"
     },
     "engines": {
