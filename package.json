@@ -1,6 +1,6 @@
 {
     "name": "@userfrosting/merge-package-dependencies",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "description": "Merge NPM, Yarn or Bower package dependencies into one package, with semver rules respected.",
     "funding": "https://opencollective.com/userfrosting",
     "type": "module",
