@@ -39,7 +39,7 @@
     "license": "MIT",
     "dependencies": {
         "@yarnpkg/lockfile": "^1.1.0",
-        "chalk": "^4.1.1",
+        "chalk": "^5.0.0",
         "node-exceptions": "^4.0.1",
         "package-json-validator": "0.6.3",
         "semver": "^7.3.5",
