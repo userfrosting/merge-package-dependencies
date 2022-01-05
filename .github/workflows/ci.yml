@@ -63,6 +63,9 @@ jobs:
   dependabot-approveOrMerge:
     needs: [test, pnpm-check, release-readiness]
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
     steps:
     - uses: actions/checkout@v2
     - name: Assess changes
