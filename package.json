@@ -51,7 +51,7 @@
         "@types/node": "^17.0.8",
         "@types/semver": "^7.3.5",
         "@types/yarnpkg__lockfile": "^1.1.4",
-        "ava": "^3.15.0",
+        "ava": "^4.0.1",
         "c8": "^7.7.1",
         "changelog-updater": "^2.0.2",
         "cspell": "^5.3.12",
