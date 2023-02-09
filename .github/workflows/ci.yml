@@ -42,7 +42,7 @@ jobs:
         path: ~/.pnpm-store
         key: pnpm-check-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
         restore-keys: pnpm-check-${{ env.cache-name }}-
-    - uses: pnpm/action-setup@v2.2.2
+    - uses: pnpm/action-setup@v2.2.4
       with:
         version: ^7.12.1
         run_install: |
