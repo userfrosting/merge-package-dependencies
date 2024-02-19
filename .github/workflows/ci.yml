@@ -69,7 +69,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Assess changes
-      uses: tony84727/changed-file-filter@v0.2.2
+      uses: tony84727/changed-file-filter@v0.2.3
       id: filter
       with:
         filters: |
