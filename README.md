@@ -8,7 +8,7 @@ A simple tool that can merge the `dependency` and `devDependency` dependency typ
 
 > NOTE: While non-semver values are supported, they will act as an override and emit a warning (even if logging is disabled). This override behavior only applies to 'incoming' values. This behavior does not match npm, yarn or bower.
 >
-> NOTE: This is currently an offline tool, and as such conflicts further down the dependency chain are not evaluated. There is however a duplicate dependency detection tool for yarn to allow the creation of workarounds in the meantime (see [docs/api](./docs/api/index.md)
+> NOTE: This is currently an offline tool, and as such conflicts further down the dependency chain are not evaluated. There is however a duplicate dependency detection tool for yarn to allow the creation of workarounds in the meantime (see [docs/api](./docs/api/index.md))
 >
 > NOTE: Any dependencies with a path specified as the version will not be adjusted, even if an output location is specified.
 
@@ -19,10 +19,6 @@ npm i -D  @userfrosting/merge-package-dependencies
 ```
 
 ## Usage
-
-> **IMPORTANT**<br/>
-> This is an ES module package targeting NodeJS `>=14.0.0`, refer to the [NodeJS ESM docs](https://nodejs.org/api/esm.html) regarding how to correctly import.
-> ESM loaders like `@babel/loader` or `esm` likely won't work as expected.
 
 To merge multiple `package.json`'s into a single object, and save to a specified location...
 
