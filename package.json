@@ -41,7 +41,7 @@
         "@yarnpkg/lockfile": "^1.1.0",
         "chalk": "^5.0.1",
         "node-exceptions": "^4.0.1",
-        "package-json-validator": "0.6.3",
+        "package-json-validator": "0.6.4",
         "semver": "^7.3.7",
         "semver-intersect": "^1.4.0"
     },
