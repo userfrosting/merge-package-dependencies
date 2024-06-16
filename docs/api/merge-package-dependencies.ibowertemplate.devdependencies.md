@@ -4,7 +4,7 @@
 
 ## IBowerTemplate.devDependencies property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 devDependencies?: {

@@ -5,8 +5,8 @@
 ## LogOption type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-export declare type LogOption = boolean | ((message?: any, ...optionalParams: any[]) => void);
+export type LogOption = boolean | ((message?: any, ...optionalParams: any[]) => void);
 ```

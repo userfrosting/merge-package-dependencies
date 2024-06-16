@@ -6,7 +6,7 @@
 
 Merge specified yarn packages together.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function yarn<TTemplate extends INodeTemplate>(template: TTemplate, paths: string[], saveTo?: string | null, log?: LogOption): TTemplate;
@@ -14,14 +14,88 @@ export declare function yarn<TTemplate extends INodeTemplate>(template: TTemplat
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  template | TTemplate | Template that packages will be merged into. Is validated with \[package-json-validator\](https://www.npmjs.com/package/package-json-validator) with template.private == true overriding this. |
-|  paths | string\[\] | Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json". |
-|  saveTo | string \| null | If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required. |
-|  log | [LogOption](./merge-package-dependencies.logoption.md) | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
+<table><thead><tr><th>
 
-<b>Returns:</b>
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+template
+
+
+</td><td>
+
+TTemplate
+
+
+</td><td>
+
+Template that packages will be merged into. Is validated with \[package-json-validator\](https://www.npmjs.com/package/package-json-validator) with template.private == true overriding this.
+
+
+</td></tr>
+<tr><td>
+
+paths
+
+
+</td><td>
+
+string\[\]
+
+
+</td><td>
+
+Paths to package.json files. EG: "path/to/" (package.json is prepended) or "path/to/package.json" or "path/to/different.json".
+
+
+</td></tr>
+<tr><td>
+
+saveTo
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+_(Optional)_ If string, saves the generated package.json to the specified path. Like 'paths', has 'package.json' prepended if required.
+
+
+</td></tr>
+<tr><td>
+
+log
+
+
+</td><td>
+
+[LogOption](./merge-package-dependencies.logoption.md)
+
+
+</td><td>
+
+_(Optional)_ If true, progress and errors will be logged. Has no affect on exceptions thrown.
+
+
+</td></tr>
+</tbody></table>
+**Returns:**
 
 TTemplate
 

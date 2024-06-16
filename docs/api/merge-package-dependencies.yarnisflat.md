@@ -6,7 +6,7 @@
 
 Uses `yarn.lock` to detect if multiple versions of a dependency have been installed.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function yarnIsFlat(p?: string, log?: LogOption): boolean;
@@ -14,12 +14,56 @@ export declare function yarnIsFlat(p?: string, log?: LogOption): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  p | string | Directory of <code>yarn.lock</code>. |
-|  log | [LogOption](./merge-package-dependencies.logoption.md) | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
+<table><thead><tr><th>
 
-<b>Returns:</b>
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+p
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Directory of `yarn.lock`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+log
+
+
+</td><td>
+
+[LogOption](./merge-package-dependencies.logoption.md)
+
+
+</td><td>
+
+_(Optional)_ If true, progress and errors will be logged. Has no affect on exceptions thrown.
+
+
+</td></tr>
+</tbody></table>
+**Returns:**
 
 boolean
 

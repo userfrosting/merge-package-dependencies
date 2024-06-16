@@ -4,7 +4,7 @@
 
 ## INodeTemplate.dependencies property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 dependencies?: {

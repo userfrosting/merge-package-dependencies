@@ -5,7 +5,7 @@
 ## IBowerTemplate interface
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface IBowerTemplate 
@@ -13,10 +13,99 @@ export interface IBowerTemplate
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [dependencies?](./merge-package-dependencies.ibowertemplate.dependencies.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
-|  [devDependencies?](./merge-package-dependencies.ibowertemplate.devdependencies.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
-|  [name](./merge-package-dependencies.ibowertemplate.name.md) | string |  |
-|  [resolutions?](./merge-package-dependencies.ibowertemplate.resolutions.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[dependencies?](./merge-package-dependencies.ibowertemplate.dependencies.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ \[x: string\]: string; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[devDependencies?](./merge-package-dependencies.ibowertemplate.devdependencies.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ \[x: string\]: string; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[name](./merge-package-dependencies.ibowertemplate.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[resolutions?](./merge-package-dependencies.ibowertemplate.resolutions.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ \[x: string\]: string; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

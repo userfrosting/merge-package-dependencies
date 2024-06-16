@@ -5,10 +5,10 @@
 ## InvalidBowerPackageException class
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class InvalidBowerPackageException extends LogicalException 
 ```
-<b>Extends:</b> LogicalException
+**Extends:** LogicalException
 
