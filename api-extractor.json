@@ -5,7 +5,7 @@
     "apiReport": {
         "enabled": true,
         "reportFolder": "<projectFolder>/docs/api-extractor",
-        "reportFileName": "api-report.md"
+        "reportFileName": "api-report"
     },
     "dtsRollup": {
         "enabled": false

@@ -5,7 +5,7 @@
 ## INodeTemplate interface
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface INodeTemplate 
@@ -13,13 +13,158 @@ export interface INodeTemplate
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [dependencies?](./merge-package-dependencies.inodetemplate.dependencies.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
-|  [devDependencies?](./merge-package-dependencies.inodetemplate.devdependencies.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
-|  [name?](./merge-package-dependencies.inodetemplate.name.md) | string | <i>(Optional)</i> |
-|  [peerDependencies?](./merge-package-dependencies.inodetemplate.peerdependencies.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
-|  [private?](./merge-package-dependencies.inodetemplate.private.md) | boolean | <i>(Optional)</i> |
-|  [resolutions?](./merge-package-dependencies.inodetemplate.resolutions.md) | { \[x: string\]: string; } | <i>(Optional)</i> |
-|  [version?](./merge-package-dependencies.inodetemplate.version.md) | string | <i>(Optional)</i> |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[dependencies?](./merge-package-dependencies.inodetemplate.dependencies.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ \[x: string\]: string; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[devDependencies?](./merge-package-dependencies.inodetemplate.devdependencies.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ \[x: string\]: string; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[name?](./merge-package-dependencies.inodetemplate.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[peerDependencies?](./merge-package-dependencies.inodetemplate.peerdependencies.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ \[x: string\]: string; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[private?](./merge-package-dependencies.inodetemplate.private.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[resolutions?](./merge-package-dependencies.inodetemplate.resolutions.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ \[x: string\]: string; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[version?](./merge-package-dependencies.inodetemplate.version.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

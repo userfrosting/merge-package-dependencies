@@ -6,7 +6,24 @@
 
 ## Packages
 
-|  Package | Description |
-|  --- | --- |
-|  [@userfrosting/merge-package-dependencies](./merge-package-dependencies.md) |  |
+<table><thead><tr><th>
 
+Package
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[@userfrosting/merge-package-dependencies](./merge-package-dependencies.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

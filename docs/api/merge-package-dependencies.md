@@ -6,30 +6,154 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [InvalidBowerPackageException](./merge-package-dependencies.invalidbowerpackageexception.md) |  |
-|  [InvalidNodePackageException](./merge-package-dependencies.invalidnodepackageexception.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[InvalidBowerPackageException](./merge-package-dependencies.invalidbowerpackageexception.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[InvalidNodePackageException](./merge-package-dependencies.invalidnodepackageexception.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [bower(template, paths, saveTo, log)](./merge-package-dependencies.bower.md) | Merge specified bower packages together. |
-|  [npm(template, paths, saveTo, log)](./merge-package-dependencies.npm.md) | Merge specified npm packages together. |
-|  [yarn(template, paths, saveTo, log)](./merge-package-dependencies.yarn.md) | Merge specified yarn packages together. |
-|  [yarnIsFlat(p, log)](./merge-package-dependencies.yarnisflat.md) | Uses <code>yarn.lock</code> to detect if multiple versions of a dependency have been installed. |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[bower(template, paths, saveTo, log)](./merge-package-dependencies.bower.md)
+
+
+</td><td>
+
+Merge specified bower packages together.
+
+
+</td></tr>
+<tr><td>
+
+[npm(template, paths, saveTo, log)](./merge-package-dependencies.npm.md)
+
+
+</td><td>
+
+Merge specified npm packages together.
+
+
+</td></tr>
+<tr><td>
+
+[yarn(template, paths, saveTo, log)](./merge-package-dependencies.yarn.md)
+
+
+</td><td>
+
+Merge specified yarn packages together.
+
+
+</td></tr>
+<tr><td>
+
+[yarnIsFlat(p, log)](./merge-package-dependencies.yarnisflat.md)
+
+
+</td><td>
+
+Uses `yarn.lock` to detect if multiple versions of a dependency have been installed.
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [IBowerTemplate](./merge-package-dependencies.ibowertemplate.md) |  |
-|  [INodeTemplate](./merge-package-dependencies.inodetemplate.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[IBowerTemplate](./merge-package-dependencies.ibowertemplate.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[INodeTemplate](./merge-package-dependencies.inodetemplate.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [LogOption](./merge-package-dependencies.logoption.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[LogOption](./merge-package-dependencies.logoption.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

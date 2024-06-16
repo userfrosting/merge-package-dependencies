@@ -4,7 +4,7 @@
 
 ## INodeTemplate.peerDependencies property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 peerDependencies?: {

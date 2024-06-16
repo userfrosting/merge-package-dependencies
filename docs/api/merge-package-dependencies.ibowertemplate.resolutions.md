@@ -4,7 +4,7 @@
 
 ## IBowerTemplate.resolutions property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolutions?: {

@@ -5,10 +5,10 @@
 ## InvalidNodePackageException class
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class InvalidNodePackageException extends LogicalException 
 ```
-<b>Extends:</b> LogicalException
+**Extends:** LogicalException
 

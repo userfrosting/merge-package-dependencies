@@ -4,7 +4,7 @@
 
 ## INodeTemplate.private property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 private?: boolean;

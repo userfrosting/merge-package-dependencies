@@ -6,7 +6,7 @@
 
 Merge specified bower packages together.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function bower<TTemplate extends IBowerTemplate>(template: TTemplate, paths: string[], saveTo?: string | null, log?: LogOption): TTemplate;
@@ -14,14 +14,88 @@ export declare function bower<TTemplate extends IBowerTemplate>(template: TTempl
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  template | TTemplate | Template that packages will be merged into. Is validated with \[bower-json\](https://www.npmjs.com/package/bower-json). |
-|  paths | string\[\] | Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json". |
-|  saveTo | string \| null | If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required. |
-|  log | [LogOption](./merge-package-dependencies.logoption.md) | If true, progress and errors will be logged. Has no affect on exceptions thrown. |
+<table><thead><tr><th>
 
-<b>Returns:</b>
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+template
+
+
+</td><td>
+
+TTemplate
+
+
+</td><td>
+
+Template that packages will be merged into. Is validated with \[bower-json\](https://www.npmjs.com/package/bower-json).
+
+
+</td></tr>
+<tr><td>
+
+paths
+
+
+</td><td>
+
+string\[\]
+
+
+</td><td>
+
+Paths to bower.json files. EG: "path/to/" (bower.json is prepended) or "path/to/bower.json" or "path/to/different.json".
+
+
+</td></tr>
+<tr><td>
+
+saveTo
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+_(Optional)_ If string, saves the generated bower.json to the specified path. Like 'paths', has 'bower.json' prepended if required.
+
+
+</td></tr>
+<tr><td>
+
+log
+
+
+</td><td>
+
+[LogOption](./merge-package-dependencies.logoption.md)
+
+
+</td><td>
+
+_(Optional)_ If true, progress and errors will be logged. Has no affect on exceptions thrown.
+
+
+</td></tr>
+</tbody></table>
+**Returns:**
 
 TTemplate
 
