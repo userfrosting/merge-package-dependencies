@@ -76,12 +76,12 @@ jobs:
           requirementsChanged:
             - 'package.json'
     - name: Merge lockfile changes
-      uses: fastify/github-action-merge-dependabot@v3.10.2
+      uses: fastify/github-action-merge-dependabot@v3.11.0
       if: steps.filter.outputs.requirementsChanged == 'false'
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Approve requirement changes
-      uses: fastify/github-action-merge-dependabot@v3.10.2
+      uses: fastify/github-action-merge-dependabot@v3.11.0
       if: steps.filter.outputs.requirementsChanged == 'true'
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
