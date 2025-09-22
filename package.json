@@ -55,7 +55,7 @@
         "c8": "^9.1.0",
         "changelog-updater": "^2.0.2",
         "cspell": "^8.6.0",
-        "del-cli": "^5.0.0",
+        "del-cli": "^7.0.0",
         "typescript": "^5.4.2"
     },
     "engines": {
