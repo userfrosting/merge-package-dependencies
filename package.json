@@ -15,17 +15,17 @@
     },
     "scripts": {
         "compile": "del-cli ./dist && tsc",
-        "pretest": "npm run compile && api-extractor run --local",
+        "pretest": "pnpm run compile && api-extractor run --local",
         "test": "c8 --all --reporter=text --reporter=lcovonly ava",
-        "prepublishOnly": "npm run compile",
-        "preversion": "npm test",
-        "version": "npm run version:apiDocRefresh && npm run version:changelogBump",
+        "prepublishOnly": "pnpm run compile",
+        "preversion": "pnpm test",
+        "version": "pnpm run version:apiDocRefresh && pnpm run version:changelogBump",
         "postversion": "git push && git push --tags",
         "version:changelogBump": "changelog-updater && git add CHANGELOG.md",
         "version:apiDocRefresh": "api-extractor run && api-documenter markdown -i ./temp -o ./docs/api && git add ./docs/api/*",
-        "release-readiness": "npm run release-readiness:cspell && npm run release-readiness:api-changes",
+        "release-readiness": "pnpm run release-readiness:cspell && pnpm run release-readiness:api-changes",
         "release-readiness:cspell": "cspell 'src/**' 'dist/**' 'docs/**' '*'",
-        "release-readiness:api-changes": "npm run compile && api-extractor run"
+        "release-readiness:api-changes": "pnpm run compile && api-extractor run"
     },
     "author": "Jordan Mele <SiliconSoldier@outlook.com.au> (https://djmm.me/)",
     "keywords": [
@@ -59,7 +59,7 @@
         "typescript": "^5.4.2"
     },
     "engines": {
-        "node": ">=18.0.0"
+        "node": ">=22.0.0"
     },
     "ava": {
         "files": [
