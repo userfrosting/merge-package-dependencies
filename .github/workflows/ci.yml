@@ -24,31 +24,9 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci --ignore-scripts
+    - run: pnpm install
     - run: ./node_modules/.bin/c8 --reporter=lcovonly npm test
     - uses: codecov/codecov-action@v6.0.0
-
-  pnpm-check:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v6
-    - uses: actions/setup-node@v6
-      with:
-        node-version: ^20.0.0
-    - uses: actions/cache@v4
-      env:
-        cache-name: cache-pnpm-modules
-      with:
-        path: ~/.pnpm-store
-        key: pnpm-check-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
-        restore-keys: pnpm-check-${{ env.cache-name }}-
-    - uses: pnpm/action-setup@v6.0.1
-      with:
-        version: ^8.15.4
-        run_install: |
-          - args: [--ignore-scripts]
-    - run: pnpm run compile
-    - run: pnpm test
 
   release-readiness:
     runs-on: ubuntu-latest
@@ -57,11 +35,11 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version: ^20.0.0
-    - run: npm ci
-    - run: npm run release-readiness
+    - run: pnpm install
+    - run: pnpm run release-readiness
 
   dependabot-approveOrMerge:
-    needs: [test, pnpm-check, release-readiness]
+    needs: [test, release-readiness]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write

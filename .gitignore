@@ -5,5 +5,4 @@ dist/
 .nyc_output
 coverage
 temp
-pnpm-lock.yaml
 .pnpm-store
