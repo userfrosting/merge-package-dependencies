@@ -1,6 +1,6 @@
 import semver from "semver";
 import { intersect as semverIntersect } from "semver-intersect";
-import { PJV, INpmValidateResult } from "package-json-validator";
+import { validate as packageJsonValidator } from "package-json-validator";
 import fs from "fs";
 import path from "path";
 import chalk from "chalk";
@@ -13,8 +13,6 @@ export {
     InvalidNodePackageException,
     InvalidBowerPackageException,
 } from "./exceptions.js";
-
-const packageJsonValidator = PJV.validate;
 
 // Known dependency keys
 const npmDependencyTypes = [
@@ -59,6 +57,14 @@ export interface IBowerTemplate {
 
 interface ITemplatePath {
     path: string;
+}
+
+interface INpmValidateResult {
+    valid: boolean;
+    errors?: { field: string; message: string }[];
+    critical?: Record<string, string> | string;
+    warnings?: string[];
+    recommendations?: string[];
 }
 
 /**
@@ -296,7 +302,10 @@ function npmValidate(pkg: INodeTemplate, pkgSpec: string, log: LogOption): void 
             if (pkg[depType] && typeof pkg[depType] !== 'object') {
                 if (!results.errors) results.errors = [];
                 results.valid = false;
-                results.errors.push(`"${depType}" must be an object.`);
+                results.errors.push({
+                    field: depType,
+                    message: "must be an object."
+                });
             }
         }
     }
@@ -328,14 +337,16 @@ function npmErrors(results: INpmValidateResult, log: LogOption): void {
     if (log) {
         // Announce critical errors.
         if (results.critical) {
-            log(chalk.bgRed("Critical Error: ") + chalk.red(results.critical));
+            const criticalError = typeof results.critical === "string" ? results.critical : JSON.stringify(results.critical);
+            log(chalk.bgRed("Critical Error: ") + chalk.red(criticalError));
         }
 
         // Announce errors.
         if (results.errors) {
             log(chalk.underline.red("Errors:"));
             for (let error of results.errors) {
-                log("  " + chalk.red(error));
+                const errorMessage = `${error.field}: ${error.message}`;
+                log("  " + chalk.red(errorMessage));
             }
         }
 
