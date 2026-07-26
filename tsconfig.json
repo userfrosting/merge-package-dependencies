@@ -2,7 +2,7 @@
     "$schema": "http://json.schemastore.org/tsconfig",
     "compilerOptions": {
         "module": "es2020",
-        "moduleResolution": "node",
+        "moduleResolution": "node16",
         "lib": [
             "es2015"
         ],
@@ -14,10 +14,8 @@
         "sourceMap": true,
         "strict": false,
         "forceConsistentCasingInFileNames": true,
-
-        // TODO Remove once self-referencing supported https://github.com/microsoft/TypeScript/issues/38675
-        "paths": {
-            "@userfrosting/merge-package-dependencies": [ "./src/main" ]
-        }
+        "types": [
+            "node"
+        ]
     }
 }
