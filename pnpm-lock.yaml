@@ -29,7 +29,7 @@ importers:
     devDependencies:
       '@microsoft/api-documenter':
         specifier: ^7.19.14
-        version: 7.30.12(@types/node@26.2.0)
+        version: 7.30.13(@types/node@26.2.0)
       '@microsoft/api-extractor':
         specifier: ^7.31.2
         version: 7.59.0(@types/node@26.2.0)
@@ -328,8 +328,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@microsoft/api-documenter@7.30.12':
-    resolution: {integrity: sha512-HrcHVzuP+22uJ1cb+xNY/zZvs24MkIyfIr7eo0CRQrZ6VcHt3xe5FZ2cUqSy0RU+IkwsIHhSAKRw9W1/AfYc8g==}
+  '@microsoft/api-documenter@7.30.13':
+    resolution: {integrity: sha512-MfmPn/0pPy7PS2kwSgTNcpjGw6BK60uCj5hp3UXgBiQ0FAlwaQPtvUgbcupBIfkKiNI2bND03i1LzQRcgZma1A==}
     engines: {node: '>=20.9.0'}
     hasBin: true
 
@@ -1778,7 +1778,7 @@ snapshots:
       - encoding
       - supports-color
 
-  '@microsoft/api-documenter@7.30.12(@types/node@26.2.0)':
+  '@microsoft/api-documenter@7.30.13(@types/node@26.2.0)':
     dependencies:
       '@microsoft/api-extractor-model': 7.33.11(@types/node@26.2.0)
       '@microsoft/tsdoc': 0.16.0
@@ -2013,7 +2013,7 @@ snapshots:
   ajv@8.20.0:
     dependencies:
       fast-deep-equal: 3.1.3
-      fast-uri: 3.1.5
+      fast-uri: 3.1.6
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
