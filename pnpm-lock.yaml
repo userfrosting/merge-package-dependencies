@@ -29,7 +29,7 @@ importers:
     devDependencies:
       '@microsoft/api-documenter':
         specifier: ^7.19.14
-        version: 7.30.13(@types/node@26.4.1)
+        version: 7.30.14(@types/node@26.4.1)
       '@microsoft/api-extractor':
         specifier: ^7.31.2
         version: 7.59.0(@types/node@26.4.1)
@@ -328,13 +328,17 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@microsoft/api-documenter@7.30.13':
-    resolution: {integrity: sha512-MfmPn/0pPy7PS2kwSgTNcpjGw6BK60uCj5hp3UXgBiQ0FAlwaQPtvUgbcupBIfkKiNI2bND03i1LzQRcgZma1A==}
+  '@microsoft/api-documenter@7.30.14':
+    resolution: {integrity: sha512-IMGwH8V7XNPL9+jk6DxeNMh3FrcDaSKuVFXlhPFe5bes4IVpZ7nK8aQNPp47P/fTD+iEekYvNIwDGmGkRAAw7g==}
     engines: {node: '>=20.9.0'}
     hasBin: true
 
   '@microsoft/api-extractor-model@7.33.11':
     resolution: {integrity: sha512-iDu1AtuRC2Z8XVs2SieZieVavF1FXPBX1C9pMexJh8Dx/Dd/3ZZ4nRQp/PU2Vk2rUHWuBz1wOyL4DcuhVnBXwg==}
+    engines: {node: '>=20.9.0'}
+
+  '@microsoft/api-extractor-model@7.33.12':
+    resolution: {integrity: sha512-TdKOYgwf98xLjNW+y3iXIiCf4ZLQbilGAlqkMTTAqqAWfgRXAn9YCSGMsaiB1U7OPRvslUWg6n08EqQPbP93tA==}
     engines: {node: '>=20.9.0'}
 
   '@microsoft/api-extractor@7.59.0':
@@ -378,6 +382,15 @@ packages:
       '@types/node':
         optional: true
 
+  '@rushstack/node-core-library@5.24.1':
+    resolution: {integrity: sha512-ZlOrzv92MwnsCXA45qWfDj4L/kTasKghXezu+M2WmdtkbnXyPnZSCovfeBZx1Yc5qm+LkElbLw6IeSSWZDhZUg==}
+    engines: {node: '>=20.9.0'}
+    peerDependencies:
+      '@types/node': '*'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+
   '@rushstack/problem-matcher@0.2.1':
     resolution: {integrity: sha512-gulfhBs6n+I5b7DvjKRfhMGyUejtSgOHTclF/eONr8hcgF1APEDjhxIsfdUYYMzC3rvLwGluqLjbwCFZ8nxrog==}
     peerDependencies:
@@ -398,8 +411,21 @@ packages:
       '@types/node':
         optional: true
 
+  '@rushstack/terminal@0.24.4':
+    resolution: {integrity: sha512-3fRBWK0IMY293lBx5ycgit1DTMUi+nhOjALHlrIad9hQsqzM9Ak+XdBI1gJ/tZPxW+LraeAc4SsmMdcOflBmAQ==}
+    engines: {node: '>=20.9.0'}
+    peerDependencies:
+      '@types/node': '*'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+
   '@rushstack/ts-command-line@5.3.13':
     resolution: {integrity: sha512-+jNbxhh8CkrZYxMk9X3GRYM2+Myr1xCCj+eHbJ9Vp+PCdNHS0TUl5QQFT6UbM/aTFRCzs5jiBTKYzBRpe5uYbQ==}
+    engines: {node: '>=20.9.0'}
+
+  '@rushstack/ts-command-line@5.3.14':
+    resolution: {integrity: sha512-lT2JKZk2dukBMp4GFOh4RaDfVzpZehGgQOGpzpSliUn317NgEmOOCXyd7/d0eU46HHsbRxizP83GAm39s0lAlg==}
     engines: {node: '>=20.9.0'}
 
   '@sindresorhus/merge-streams@2.3.0':
@@ -883,6 +909,9 @@ packages:
 
   fast-uri@3.1.6:
     resolution: {integrity: sha512-7Ical1vFEMr0onbVzEDIreM22I4khW+fzyQPwvAFWBp1iwdshSZRsL4jjRvPG9JP1uiqMHRto+YU6R2/CzDz5Q==}
+
+  fast-uri@3.1.7:
+    resolution: {integrity: sha512-dOvZVzjdZdz7phd9v6jCbwxrBW3fK6n8Rc0CtdmM4bumzMnxywBYhuph6J819RRw/ku+rLbelwfMunktuzVVHg==}
 
   fastq@1.20.1:
     resolution: {integrity: sha512-GGToxJ/w1x32s/D2EKND7kTil4n8OVk/9mycTc4VDza13lOvpUZTGX3mFSCtV9ksdGBVzvsyAVLM6mHFThxXxw==}
@@ -1771,13 +1800,13 @@ snapshots:
       - encoding
       - supports-color
 
-  '@microsoft/api-documenter@7.30.13(@types/node@26.4.1)':
+  '@microsoft/api-documenter@7.30.14(@types/node@26.4.1)':
     dependencies:
-      '@microsoft/api-extractor-model': 7.33.11(@types/node@26.4.1)
+      '@microsoft/api-extractor-model': 7.33.12(@types/node@26.4.1)
       '@microsoft/tsdoc': 0.16.0
-      '@rushstack/node-core-library': 5.24.0(@types/node@26.4.1)
-      '@rushstack/terminal': 0.24.3(@types/node@26.4.1)
-      '@rushstack/ts-command-line': 5.3.13(@types/node@26.4.1)
+      '@rushstack/node-core-library': 5.24.1(@types/node@26.4.1)
+      '@rushstack/terminal': 0.24.4(@types/node@26.4.1)
+      '@rushstack/ts-command-line': 5.3.14(@types/node@26.4.1)
       js-yaml: 4.1.1
       resolve: 1.22.12
     transitivePeerDependencies:
@@ -1788,6 +1817,14 @@ snapshots:
       '@microsoft/tsdoc': 0.16.0
       '@microsoft/tsdoc-config': 0.18.1
       '@rushstack/node-core-library': 5.24.0(@types/node@26.4.1)
+    transitivePeerDependencies:
+      - '@types/node'
+
+  '@microsoft/api-extractor-model@7.33.12(@types/node@26.4.1)':
+    dependencies:
+      '@microsoft/tsdoc': 0.16.0
+      '@microsoft/tsdoc-config': 0.18.1
+      '@rushstack/node-core-library': 5.24.1(@types/node@26.4.1)
     transitivePeerDependencies:
       - '@types/node'
 
@@ -1849,6 +1886,19 @@ snapshots:
     optionalDependencies:
       '@types/node': 26.4.1
 
+  '@rushstack/node-core-library@5.24.1(@types/node@26.4.1)':
+    dependencies:
+      ajv: 8.20.0
+      ajv-draft-04: 1.0.0(ajv@8.20.0)
+      ajv-formats: 3.0.1(ajv@8.20.0)
+      fs-extra: 11.3.6
+      import-lazy: 4.0.0
+      jju: 1.4.0
+      resolve: 1.22.12
+      semver: 7.7.4
+    optionalDependencies:
+      '@types/node': 26.4.1
+
   '@rushstack/problem-matcher@0.2.1(@types/node@26.4.1)':
     optionalDependencies:
       '@types/node': 26.4.1
@@ -1866,9 +1916,26 @@ snapshots:
     optionalDependencies:
       '@types/node': 26.4.1
 
+  '@rushstack/terminal@0.24.4(@types/node@26.4.1)':
+    dependencies:
+      '@rushstack/node-core-library': 5.24.1(@types/node@26.4.1)
+      '@rushstack/problem-matcher': 0.2.1(@types/node@26.4.1)
+      supports-color: 8.1.1
+    optionalDependencies:
+      '@types/node': 26.4.1
+
   '@rushstack/ts-command-line@5.3.13(@types/node@26.4.1)':
     dependencies:
       '@rushstack/terminal': 0.24.3(@types/node@26.4.1)
+      '@types/argparse': 1.0.38
+      argparse: 1.0.10
+      string-argv: 0.3.2
+    transitivePeerDependencies:
+      - '@types/node'
+
+  '@rushstack/ts-command-line@5.3.14(@types/node@26.4.1)':
+    dependencies:
+      '@rushstack/terminal': 0.24.4(@types/node@26.4.1)
       '@types/argparse': 1.0.38
       argparse: 1.0.10
       string-argv: 0.3.2
@@ -2006,7 +2073,7 @@ snapshots:
   ajv@8.20.0:
     dependencies:
       fast-deep-equal: 3.1.3
-      fast-uri: 3.1.6
+      fast-uri: 3.1.7
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
@@ -2341,6 +2408,8 @@ snapshots:
   fast-json-stable-stringify@2.1.0: {}
 
   fast-uri@3.1.6: {}
+
+  fast-uri@3.1.7: {}
 
   fastq@1.20.1:
     dependencies:
