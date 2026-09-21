@@ -53,7 +53,7 @@ jobs:
     steps:
     - uses: actions/checkout@v7
     - name: Assess changes
-      uses: tony84727/changed-file-filter@v0.2.5
+      uses: tony84727/changed-file-filter@v0.2.6
       id: filter
       with:
         filters: |
