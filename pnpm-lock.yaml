@@ -32,7 +32,7 @@ importers:
         version: 7.30.15(@types/node@26.6.2)
       '@microsoft/api-extractor':
         specifier: ^7.31.2
-        version: 7.59.1(@types/node@26.6.2)
+        version: 7.59.2(@types/node@26.6.2)
       '@types/node':
         specifier: ^26.1.1
         version: 26.6.2
@@ -337,16 +337,26 @@ packages:
     resolution: {integrity: sha512-TdKOYgwf98xLjNW+y3iXIiCf4ZLQbilGAlqkMTTAqqAWfgRXAn9YCSGMsaiB1U7OPRvslUWg6n08EqQPbP93tA==}
     engines: {node: '>=20.9.0'}
 
-  '@microsoft/api-extractor@7.59.1':
-    resolution: {integrity: sha512-GjRUqx1MTY7xuH36urwASkfBPzrdxYG+irVeV7C9JEdRtn509AgMmwit/BhvztQzIoFk9vhFDTVYOp2cjw+9Uw==}
+  '@microsoft/api-extractor-model@7.33.13':
+    resolution: {integrity: sha512-OVL/dDvHstFJMJb2amgI7S9p9wAVMyrt18R2aSBOP9tVAARWiEJAM3wVsgxXymMOvnvKO/np9X7PeJpNZv3eLg==}
+    engines: {node: '>=20.9.0'}
+
+  '@microsoft/api-extractor@7.59.2':
+    resolution: {integrity: sha512-hhkH6p2AmJtneC1cyxDTzUBg3DJHxvsCW5ciTrFSY8H9nTWB+lwa1nmmmTAqNFc9mufMATlH6hwdOI/Jc1wjfw==}
     engines: {node: '>=20.9.0'}
     hasBin: true
 
   '@microsoft/tsdoc-config@0.18.1':
     resolution: {integrity: sha512-9brPoVdfN9k9g0dcWkFeA7IH9bbcttzDJlXvkf8b2OBzd5MueR1V2wkKBL0abn0otvmkHJC6aapBOTJDDeMCZg==}
 
+  '@microsoft/tsdoc-config@0.18.2':
+    resolution: {integrity: sha512-4ymuLTQ9lFwJXK15f41iPcNHflymjk02Ltq5f5wo3fA02O1nHIGSc1TIZwzTSQZep+jXHM644jobt4Q8O3vtqg==}
+
   '@microsoft/tsdoc@0.16.0':
     resolution: {integrity: sha512-xgAyonlVVS+q7Vc7qLW0UrJU7rSFcETRWsqdXZtjzRU8dF+6CkozTK4V4y1LwOX7j8r/vHphjDeMeGI4tNGeGA==}
+
+  '@microsoft/tsdoc@0.17.0':
+    resolution: {integrity: sha512-p68VexhnH7ojf3U27RdryUDqnKJgKaWUbCL96vJR7N0mqDuhKG5OIECk3sCPPdynxjk+yoVhRkScqtv5KQjzsw==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -378,6 +388,15 @@ packages:
       '@types/node':
         optional: true
 
+  '@rushstack/node-core-library@5.24.2':
+    resolution: {integrity: sha512-sgSqy/lqce+uMrggF/wEIISIfpMX8pAXE5qSzGgDYFrWJkrsttrw/MzU4GFVNcbHSkPz5KbSh/A4/JSpDHoNQA==}
+    engines: {node: '>=20.9.0'}
+    peerDependencies:
+      '@types/node': '*'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+
   '@rushstack/problem-matcher@0.2.1':
     resolution: {integrity: sha512-gulfhBs6n+I5b7DvjKRfhMGyUejtSgOHTclF/eONr8hcgF1APEDjhxIsfdUYYMzC3rvLwGluqLjbwCFZ8nxrog==}
     peerDependencies:
@@ -398,8 +417,21 @@ packages:
       '@types/node':
         optional: true
 
+  '@rushstack/terminal@0.24.5':
+    resolution: {integrity: sha512-AkbHjc48S7g4HkFO2wKHVMuJiZs/KaRI/rjcSpEj7o6SXgRYZrpXDE10NFa8ov/bxm4F5x+A8iqxkAGfEUTuTA==}
+    engines: {node: '>=20.9.0'}
+    peerDependencies:
+      '@types/node': '*'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+
   '@rushstack/ts-command-line@5.3.14':
     resolution: {integrity: sha512-lT2JKZk2dukBMp4GFOh4RaDfVzpZehGgQOGpzpSliUn317NgEmOOCXyd7/d0eU46HHsbRxizP83GAm39s0lAlg==}
+    engines: {node: '>=20.9.0'}
+
+  '@rushstack/ts-command-line@5.3.15':
+    resolution: {integrity: sha512-9oUS23ebDfbl8ED6CANdQ3qqBc/xhrQvzhQAv61oN391FvNRww6RzdUbo97NEXaMm7lNEQsTjdE3zqtgiMv/eQ==}
     engines: {node: '>=20.9.0'}
 
   '@sindresorhus/merge-streams@2.3.0':
@@ -1788,15 +1820,23 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@microsoft/api-extractor@7.59.1(@types/node@26.6.2)':
+  '@microsoft/api-extractor-model@7.33.13(@types/node@26.6.2)':
     dependencies:
-      '@microsoft/api-extractor-model': 7.33.12(@types/node@26.6.2)
-      '@microsoft/tsdoc': 0.16.0
-      '@microsoft/tsdoc-config': 0.18.1
-      '@rushstack/node-core-library': 5.24.1(@types/node@26.6.2)
+      '@microsoft/tsdoc': 0.17.0
+      '@microsoft/tsdoc-config': 0.18.2
+      '@rushstack/node-core-library': 5.24.2(@types/node@26.6.2)
+    transitivePeerDependencies:
+      - '@types/node'
+
+  '@microsoft/api-extractor@7.59.2(@types/node@26.6.2)':
+    dependencies:
+      '@microsoft/api-extractor-model': 7.33.13(@types/node@26.6.2)
+      '@microsoft/tsdoc': 0.17.0
+      '@microsoft/tsdoc-config': 0.18.2
+      '@rushstack/node-core-library': 5.24.2(@types/node@26.6.2)
       '@rushstack/rig-package': 0.7.3
-      '@rushstack/terminal': 0.24.4(@types/node@26.6.2)
-      '@rushstack/ts-command-line': 5.3.14(@types/node@26.6.2)
+      '@rushstack/terminal': 0.24.5(@types/node@26.6.2)
+      '@rushstack/ts-command-line': 5.3.15(@types/node@26.6.2)
       diff: 8.0.4
       minimatch: 10.2.3
       resolve: 1.22.12
@@ -1813,7 +1853,16 @@ snapshots:
       jju: 1.4.0
       resolve: 1.22.12
 
+  '@microsoft/tsdoc-config@0.18.2':
+    dependencies:
+      '@microsoft/tsdoc': 0.17.0
+      ajv: 8.18.0
+      jju: 1.4.0
+      resolve: 1.22.12
+
   '@microsoft/tsdoc@0.16.0': {}
+
+  '@microsoft/tsdoc@0.17.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -1846,6 +1895,19 @@ snapshots:
     optionalDependencies:
       '@types/node': 26.6.2
 
+  '@rushstack/node-core-library@5.24.2(@types/node@26.6.2)':
+    dependencies:
+      ajv: 8.20.0
+      ajv-draft-04: 1.0.0(ajv@8.20.0)
+      ajv-formats: 3.0.1(ajv@8.20.0)
+      fs-extra: 11.3.6
+      import-lazy: 4.0.0
+      jju: 1.4.0
+      resolve: 1.22.12
+      semver: 7.7.4
+    optionalDependencies:
+      '@types/node': 26.6.2
+
   '@rushstack/problem-matcher@0.2.1(@types/node@26.6.2)':
     optionalDependencies:
       '@types/node': 26.6.2
@@ -1863,9 +1925,26 @@ snapshots:
     optionalDependencies:
       '@types/node': 26.6.2
 
+  '@rushstack/terminal@0.24.5(@types/node@26.6.2)':
+    dependencies:
+      '@rushstack/node-core-library': 5.24.2(@types/node@26.6.2)
+      '@rushstack/problem-matcher': 0.2.1(@types/node@26.6.2)
+      supports-color: 8.1.1
+    optionalDependencies:
+      '@types/node': 26.6.2
+
   '@rushstack/ts-command-line@5.3.14(@types/node@26.6.2)':
     dependencies:
       '@rushstack/terminal': 0.24.4(@types/node@26.6.2)
+      '@types/argparse': 1.0.38
+      argparse: 1.0.10
+      string-argv: 0.3.2
+    transitivePeerDependencies:
+      - '@types/node'
+
+  '@rushstack/ts-command-line@5.3.15(@types/node@26.6.2)':
+    dependencies:
+      '@rushstack/terminal': 0.24.5(@types/node@26.6.2)
       '@types/argparse': 1.0.38
       argparse: 1.0.10
       string-argv: 0.3.2
