@@ -1375,8 +1375,8 @@ packages:
     resolution: {integrity: sha512-SO/3iYL5S3W57LLEniscOGPZgOqZUPCx6d3dB+52B80yJ0XstzsC/eV8gnA4tM3MHDrKz+OCFSLNjswdSC+/bA==}
     engines: {node: '>=22'}
 
-  smol-toml@1.8.0:
-    resolution: {integrity: sha512-kCZr2V3ch9i00x8zXRhjUNVcjG9ijES5dDudkXvUVCT5QlJNQWElSJdZqyPemffHoLNUYwOcou0Fy+ojN0uHSQ==}
+  smol-toml@1.9.1:
+    resolution: {integrity: sha512-j7WyPdf0CJoutMzMoPLF/bVXHtKZIT9Rb4eGeEbWw8X2t5oirjPgpL+OpaENZrILYaXqYwnVH+qgUwVbl+pUJQ==}
     engines: {node: '>= 18'}
 
   source-map@0.6.1:
@@ -2253,7 +2253,7 @@ snapshots:
     dependencies:
       '@cspell/cspell-types': 10.3.6
       comment-json: 5.0.0
-      smol-toml: 1.8.0
+      smol-toml: 1.9.1
       yaml: 2.9.0
 
   cspell-dictionary@10.3.6:
@@ -2785,7 +2785,7 @@ snapshots:
       ansi-styles: 6.2.3
       is-fullwidth-code-point: 5.1.0
 
-  smol-toml@1.8.0: {}
+  smol-toml@1.9.1: {}
 
   source-map@0.6.1: {}
 
