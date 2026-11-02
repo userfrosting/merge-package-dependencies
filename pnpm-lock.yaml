@@ -29,7 +29,7 @@ importers:
     devDependencies:
       '@microsoft/api-documenter':
         specifier: ^7.19.14
-        version: 7.30.18(@types/node@26.6.5)
+        version: 7.30.19(@types/node@26.6.5)
       '@microsoft/api-extractor':
         specifier: ^7.31.2
         version: 7.59.4(@types/node@26.6.5)
@@ -352,8 +352,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@microsoft/api-documenter@7.30.18':
-    resolution: {integrity: sha512-HbmyutE7u6JQ6GYn4dxyDDfoFKdLjHOvCcbRGSkz+wfWJcKxYzpG/G3kSsmZgW+4JMeTh3u36usiwAbHvmhlhA==}
+  '@microsoft/api-documenter@7.30.19':
+    resolution: {integrity: sha512-LuKurf1uBwQUGrrFa/tWJmw6S1Hd6OYJR3gQwCh6CIW7V+rI7qzSEoRnAU/inHLJnT9ggo90T0aVZqE2UvbpVQ==}
     engines: {node: '>=20.9.0'}
     hasBin: true
 
@@ -1806,7 +1806,7 @@ snapshots:
       - encoding
       - supports-color
 
-  '@microsoft/api-documenter@7.30.18(@types/node@26.6.5)':
+  '@microsoft/api-documenter@7.30.19(@types/node@26.6.5)':
     dependencies:
       '@microsoft/api-extractor-model': 7.33.15(@types/node@26.6.5)
       '@microsoft/tsdoc': 0.17.0
