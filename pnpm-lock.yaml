@@ -44,7 +44,7 @@ importers:
         version: 1.1.9
       ava:
         specifier: ^8.0.1
-        version: 8.2.0(supports-color@8.1.1)
+        version: 8.3.0(supports-color@8.1.1)
       c8:
         specifier: ^12.0.0
         version: 12.0.0
@@ -682,8 +682,8 @@ packages:
   async-sema@3.1.1:
     resolution: {integrity: sha512-tLRNUXati5MFePdAk8dw7Qt7DpxPB60ofAgn8WRhW6a2rcimZnYBP9oxHiv0OHy+Wz7kPMG+t4LGdt31+4EmGg==}
 
-  ava@8.2.0:
-    resolution: {integrity: sha512-9THsZEBUhwvA3e1oVqyJx9o4cBaLSkxScfP0oPlA9I7TDga51UDLMQJRy6bMDqMl3eubFCqxlj12h5IHEsLO7g==}
+  ava@8.3.0:
+    resolution: {integrity: sha512-Tr/p0fmC+oCJo5+m1oJdpmBxC1OO57xtVKlJfbN0gkz31yofpk08jl4Hzx654RdKq1FPc0XYiHF4ZzdqR+87gg==}
     engines: {node: ^22.20 || ^24.12 || >=26}
     hasBin: true
     peerDependencies:
@@ -2133,7 +2133,7 @@ snapshots:
 
   async-sema@3.1.1: {}
 
-  ava@8.2.0(supports-color@8.1.1):
+  ava@8.3.0(supports-color@8.1.1):
     dependencies:
       '@vercel/nft': 1.11.0(supports-color@8.1.1)
       acorn: 8.19.0
